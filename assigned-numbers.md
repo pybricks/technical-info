@@ -44,6 +44,10 @@ programmable brick).
 | 58 (0x3A) | Powered Up hub IMU gyro |
 | 59 (0x3B) | Powered Up hub IMU position |
 | 60 (0x3C) | Powered Up hub IMU temperature |
+| 61 (0x3D) | SPIKE Prime Color Sensor (45605) |
+| 62 (0x3E) | SPIKE Prime Ultrasonic/Distance Sensor (45604) |
+| 63 (0x3F) | SPIKE Prime Force Sensor (45606) |
+
 
 
 Device IDs
