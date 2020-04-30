@@ -48,6 +48,33 @@ device supports this feature, it will reply with a `BYTE_ACK` message. If no
 `BYTE_ACK` is received, then it is assumed the feature is not supported and it
 is expected that the information messages will be received at 2400 baud.
 
+## The handshaking sequence
+| Ord. | Command (Sensor to HUB) | Description                      |
+|------|---------|----------------------------------|
+|      |   | Sensor is connected to the HUB...                           |
+| 0    |   | Set TX pin from LOW to HIGH for 13ms, then again to LOW                               |
+| 1    | CMD_TYPE  |                                  |
+|2 |	CMD_MODES |	*
+|3|	CMD_SPEED	| |
+|4|	CMD_VERSION	||
+| |(10 ms pause)||	
+|5a|	CMD_INFO (NAME)| * |
+|5b|	CMD_INFO (RAW)| * |
+|5c|	CMD_INFO (PCT)| * |
+|5d|	CMD_INFO (SI)| * |
+|5e|	CMD_INFO (SYMBOL)| * |
+|5f|	CMD_INFO (MAPPING)| * |
+|5g|	CMD_INFO (VALUE FORMAT)| * |
+|5f	|(10 ms pause)| * *Note: The 5a-5f data block is repeated, with different data, for each mode specified at point 2)*	|
+|6	|CMD_INFO (CAPABILITY BITS)|	|
+|7	|ACK	|
+|8	|(wait at maximum of 650 ms for ACK reply from the HUB)|	
+|9	|If no ACK is received, set the TX pin to LOW for 500 ms then restart from point 0)	||
+|   |If ACK is received, start the communication sequence	||
+
+## The communication sequence
+(coming soon)
+
 
 ## Message Format
 
