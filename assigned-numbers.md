@@ -91,3 +91,19 @@ LEGO-specific UUIDs:
 ### BLE Advertising Data
 
 Company ID: 919 (0x0397) - LEGO System A/S
+
+
+### USB Devices
+
+| VID | PID | Description |
+|-|-|-|
+| 0x0694 | 0x0001 | LEGO MINDSTORMS RCX IR Tower |
+| 0x0694 | 0x0002 | LEGO MINDSTORMS NXT |
+| 0x03eb | 0x6124 | LEGO MINDSTORMS NXT in firmware update mode (Atmel SAM-BA mode) |
+| 0x0694 | 0x0003 | LEGO WeDo 1.0 USB Hub |
+| 0x0694 | 0x0004 | ? |
+| 0x0694 | 0x0005 | LEGO MINDSTORMS EV3 |
+| 0x0694 | 0x0006 | LEGO MINDSTORMS EV3 in firmware update mode |
+| 0x0694 | 0x0007 | ? |
+| 0x0694 | 0x0008 | LEGO Technic Large Hub (SPIKE Prime) in firmware update mode (DFU) |
+| 0x0694 | 0x0009 | LEGO Technic Large Hub (SPIKE Prime) |
