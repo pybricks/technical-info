@@ -44,6 +44,7 @@ programmable brick).
 | 58 (0x3A) | Powered Up hub IMU gyro |
 | 59 (0x3B) | Powered Up hub IMU position |
 | 60 (0x3C) | Powered Up hub IMU temperature |
+| 76 (0x4C) | Technic Large Angular motor |
 
 
 Device IDs
