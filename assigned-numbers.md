@@ -47,8 +47,8 @@ programmable brick).
 | 61 (0x3D) | SPIKE Prime Color Sensor (45605) |
 | 62 (0x3E) | SPIKE Prime Ultrasonic/Distance Sensor (45604) |
 | 63 (0x3F) | SPIKE Prime Force Sensor (45606) |
-| 75 (0x4B) | Techic Medium Angular Motor, gray (?) |
-
+| 75 (0x4B) | Technic Medium Angular Motor, gray (?) |
+| 76 (0x4C) | Technic Large Angular motor, gray (?) |
 
 
 Device IDs
