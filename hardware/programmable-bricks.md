@@ -18,7 +18,7 @@
 | USB Host Port              | no          | yes [6]     | no             | no       | no                   | no              |
 | USB Peripheral Port        | yes [7]     | yes [8]     | no             | no       | no                   | yes [9]         |
 | Alkaline Batteries         | 6 AA        | 6 AA        | 6 AAA          | 6 AAA    | 6 AA                 | no              |
-| Rechargeable Li-io Battey  | yes         | yes         | no             | no       | yes (future)         | yes             |
+| Rechargeable Li-ion Battery| yes         | yes         | no             | no       | yes (future)         | yes             |
 | Battery charger            | no          | no          | no             | no       | no                   | yes             |
 | RJ-12 I/O connector        | 4 in, 3 out | 4 in, 4 out | no             | no       | no                   | no              |
 | Powered Up I/O connector   | no          | no          | 2              | 2        | 4                    | 6               |
