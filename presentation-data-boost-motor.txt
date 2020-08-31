@@ -1,0 +1,57 @@
+{
+   "fw_version":268435456,
+   "speed":115200,
+   "hw_version":268435456,
+   "combi_modes":(6,7),
+   "type":38,
+   "modes":[
+      {
+         "symbol":"PCT",
+         "format":{
+            "datasets":1,
+            "type":0,
+            "figures":1,
+            "decimals":0
+         },
+         "capability":"b""\\x10\\x00\\x00\\x00\\x01\\x02",
+         "map_out":16,
+         "name":"POWER",
+         "pct":(-100.0, 100.0),
+         "map_in":0,
+         "si":(-100.0, 100.0),
+         "raw":(-100.0, 100.0)
+      },
+      {
+         "symbol":"PCT",
+         "format":{
+            "datasets":1,
+            "type":0,
+            "figures":4,
+            "decimals":0
+         },
+         "capability":"b""!\\x00\\x00\\x00\\x01\\x02",
+         "map_out":16,
+         "name":"SPEED",
+         "pct":(-100.0,100.0),
+         "map_in":16,
+         "si":(-100.0,100.0),
+         "raw":(-100.0,100.0)
+      },
+      {
+         "symbol":"DEG",
+         "format":{
+            "datasets":1,
+            "type":2,
+            "figures":4,
+            "decimals":0
+         },
+         "capability":"b""$\\x00\\x00\\x00\\x01\\x02",
+         "map_out":8,
+         "name":"POS",
+         "pct":(-100.0,100.0),
+         "map_in":8,
+         "si":(-360.0,360.0),
+         "raw":(-360.0,360.0)
+      }
+   ]
+}
