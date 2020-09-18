@@ -94,7 +94,10 @@ LEGO-specific UUIDs:
 Company ID: 919 (0x0397) - LEGO System A/S
 
 
-### USB Devices
+USB
+---
+
+### USB Device IDs
 
 | VID | PID | Description |
 |-|-|-|
