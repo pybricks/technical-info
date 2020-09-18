@@ -60,6 +60,7 @@ Device IDs
 | 65 (0x41) | Powered UP Smart Hub (Hub #4) |
 | 66 (0x42) | Powered UP Handset (remote) |
 | 128 (0x80) | TECHNIC Control+ Hub (Hub #2) |
+| 132 (0x84) | SPIKE Prime Hub (Hub #6) |
 
 
 Bluetooth
