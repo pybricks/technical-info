@@ -66,6 +66,14 @@ Device IDs
 Bluetooth
 ---------
 
+### OUIs
+
+| OUI      | Devices |
+|----------|---------|
+| 00:16:53 | NXT, EV3, BOOST |
+| 90:84:2B | Powered Up |
+
+
 ### BLE UUIDs
 
 LEGO-specific UUIDs:
