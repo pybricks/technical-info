@@ -47,6 +47,7 @@ programmable brick).
 | 61 (0x3D) | SPIKE Prime Color Sensor (45605) |
 | 62 (0x3E) | SPIKE Prime Ultrasonic/Distance Sensor (45604) |
 | 63 (0x3F) | SPIKE Prime Force Sensor (45606) |
+| 75 (0x4B) | Techic Medium Angular Motor, gray (?) |
 
 
 
@@ -60,7 +61,7 @@ Device IDs
 | 65 (0x41) | Powered UP Smart Hub (Hub #4) |
 | 66 (0x42) | Powered UP Handset (remote) |
 | 128 (0x80) | TECHNIC Control+ Hub (Hub #2) |
-| 132 (0x84) | SPIKE Prime Hub (Hub #6) |
+| 132 (0x84) | Technic Large Hub - SPIKE Prime, yellow - MINDSTORMS Inventor, teal (Hub #6) |
 
 
 Bluetooth
@@ -68,10 +69,12 @@ Bluetooth
 
 ### OUIs
 
-| OUI      | Devices |
-|----------|---------|
-| 00:16:53 | NXT, EV3, BOOST |
-| 90:84:2B | Powered Up |
+| OUI      | Vendor            | Devices         |
+|----------|-------------------|-----------------|
+| 00:16:53 | LEGO System A/S   | NXT, EV3, BOOST |
+| 90:84:2B | LEGO System A/S   | Powered Up      |
+| 38:0B:3C | Texas Instruments | Inventor        |
+| F4:84:4C | Texas Instruments | Prime           |
 
 
 ### BLE UUIDs
@@ -117,5 +120,7 @@ USB
 | 0x0694 | 0x0005 | LEGO MINDSTORMS EV3 |
 | 0x0694 | 0x0006 | LEGO MINDSTORMS EV3 in firmware update mode |
 | 0x0694 | 0x0007 | ? |
-| 0x0694 | 0x0008 | LEGO Technic Large Hub (SPIKE Prime) in firmware update mode (DFU) |
+| 0x0694 | 0x0008 | LEGO Technic Large Hub in DFU mode (SPIKE Prime) |
 | 0x0694 | 0x0009 | LEGO Technic Large Hub (SPIKE Prime) |
+| 0x0694 | 0x0010 | LEGO Technic Large Hub (MINDSTORMS Inventor) |
+| 0x0694 | 0x0011 | LEGO Technic Large Hub in DFU mode (MINDSTORMS Inventor) |
