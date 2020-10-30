@@ -58,10 +58,10 @@ Device IDs
 |-|-|
 | 32 (0x20) | DUPLO Train Hub |
 | 64 (0x40) | BOOST Move Hub |
-| 65 (0x41) | Powered UP Smart Hub (Hub #4) |
+| 65 (0x41) | Powered UP 2-port Smart Hub (Hub No. 4) |
 | 66 (0x42) | Powered UP Handset (remote) |
-| 128 (0x80) | TECHNIC Control+ Hub (Hub #2) |
-| 132 (0x84) | Technic Large Hub - SPIKE Prime, yellow - MINDSTORMS Inventor, teal (Hub #6) |
+| 128 (0x80) | TECHNIC Control+ Hub (Hub No. 2) |
+| 132 (0x84) | Technic Large Hub - SPIKE Prime (Hub No. 6) - MINDSTORMS Inventor (Hub No. 13) |
 
 
 Bluetooth
