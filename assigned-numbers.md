@@ -99,6 +99,13 @@ LEGO-specific UUIDs:
 | 1625 | 00001625-1212-EFDE-1623-785FEABCD123 | Powered Up bootloader service |
 | 1626 | 00001626-1212-EFDE-1623-785FEABCD123 | Powered Up bootloader characteristic |
 
+Pybricks-specific UUIDs:
+
+| 16-bit | 128-bit | Description |
+|-|-|-|
+| 0001 | 6E400001-B5A3-F393-E0A-9E50E24DCCA9E | Pybricks service |
+| 0002 | 6E400002-B5A3-F393-E0A-9E50E24DCCA9E | Pybricks control characteristic |
+| 0003 | 6E400003-B5A3-F393-E0A-9E50E24DCCA9E | Pybricks stream characteristic |
 
 ### BLE Advertising Data
 
