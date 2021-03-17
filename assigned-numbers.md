@@ -103,9 +103,9 @@ Pybricks-specific UUIDs:
 
 | 16-bit | 128-bit | Description |
 |-|-|-|
-| 0001 | 6E400001-B5A3-F393-E0A-9E50E24DCCA9E | Pybricks service |
-| 0002 | 6E400002-B5A3-F393-E0A-9E50E24DCCA9E | Pybricks control characteristic |
-| 0003 | 6E400003-B5A3-F393-E0A-9E50E24DCCA9E | Pybricks stream characteristic |
+| 0001 | C5F50001-8280-46DA-89F4-6D8051E4AEEF | Pybricks service |
+| 0002 | C5F50002-8280-46DA-89F4-6D8051E4AEEF | Pybricks control characteristic |
+| 0003 | C5F50003-8280-46DA-89F4-6D8051E4AEEF | Pybricks stream characteristic |
 
 ### BLE Advertising Data
 
