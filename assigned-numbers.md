@@ -4,7 +4,7 @@ Assigned Numbers
 Type IDs
 --------
 
-Type IDs are used to identify sensors and motors (including ones built into a
+I/O device type IDs are used to identify sensors and motors (including ones built into a
 programmable brick).
 
 | ID (hex) | Description |
@@ -51,8 +51,8 @@ programmable brick).
 | 76 (0x4C) | Technic Large Angular motor, gray (?) |
 
 
-Device IDs
-----------
+Hub IDs
+-------
 
 | ID (hex) | Description |
 |-|-|
