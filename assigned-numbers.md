@@ -39,7 +39,7 @@ programmable brick).
 | 50 (0x32) | Technic Control+ Hub ? | *N/A* | *N/A* |
 | 54 (0x36) | Powered Up hub IMU gesture | *N/A* | *N/A* |
 | 55 (0x37) | Powered Up Handset Buttons | *N/A* | *N/A* |
-| 56 (0x38) | Powered Up Handset Light? | *N/A* | *N/A* |
+| 56 (0x38) | Powered Up hub Bluetooth RSSI | *N/A* | *N/A* |
 | 57 (0x39) | Powered Up hub IMU accelerometer | *N/A* | *N/A* |
 | 58 (0x3A) | Powered Up hub IMU gyro | *N/A* | *N/A* |
 | 59 (0x3B) | Powered Up hub IMU position | *N/A* | *N/A* |
