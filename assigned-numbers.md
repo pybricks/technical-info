@@ -90,16 +90,16 @@ LEGO-specific UUIDs:
 | 1526 | 00001526-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 button state characteristic |
 | 1527 | 00001527-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 attached I/O characteristic |
 | 1528 | 00001528-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 low voltage alert characteristic |
-| 1528 | 00001529-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 high current alert characteristic |
-| 1528 | 0000152A-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 low signal alert characteristic |
+| 1529 | 00001529-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 high current alert characteristic |
+| 152A | 0000152A-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 low signal alert characteristic |
 | 152B | 0000152B-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 power off characteristic |
-| 152B | 0000152C-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 port vcc control characteristic |
-| 152B | 0000152D-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 battery type characteristic |
-| 152B | 0000152E-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 disconnect characteristic |
+| 152C | 0000152C-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 port vcc control characteristic |
+| 152D | 0000152D-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 battery type characteristic |
+| 152E | 0000152E-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 disconnect characteristic |
 | 1560 | 00001560-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input value characteristic |
 | 1561 | 00001561-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input format characteristic |
-| 1562 | 00001563-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input command characteristic |
-| 1563 | 00001565-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 output command characteristic |
+| 1563 | 00001563-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input command characteristic |
+| 1565 | 00001565-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 output command characteristic |
 | 4F0E | 00004F0E-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input service |
 | 1623 | 00001623-1212-EFDE-1623-785FEABCD123 | Powered Up LWP3 hub service |
 | 1624 | 00001624-1212-EFDE-1623-785FEABCD123 | Powered Up LWP3 hub characteristic |
