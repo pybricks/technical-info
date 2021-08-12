@@ -16,12 +16,18 @@
 -- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 -- Usage:
--- wireshark -X lua_script:lwp3_dissector.lua
+--
+-- Start from the command line: wireshark -X lua_script:lwp3_dissector.lua
+--
+-- Or place file in "Personal Lua Plugins" directory found under Help (menu) >
+-- About Wireshark > Folders (tab). Then after the file has been placed there,
+-- Analyze (menu) > Reload Lua Plugins.
+
 
 
 ---- Protocol: declare the names we will see in Wireshark ---
 
-local lwp3_proto = Proto("LWP3", "LEGO Wireless Protocol v3")
+local lwp3_proto = Proto("LWP3", "LEGO Wireless Protocol v3 Hub Service")
 
 -- Common Message Header
 -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#common-message-header
@@ -97,6 +103,8 @@ local device_numbers = {
     [0x40] = "Boost Hub",
     [0x41] = "2 Port Hub",
     [0x42] = "2 Port Handset",
+    [0x80] = "Technic Medium Hub",
+    [0x81] = "Technic Large Hub",
 }
 
 -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#port-id
@@ -537,7 +545,7 @@ local msg_types = {
 ---- Dissector: the entry point for the dissector ----
 
 function lwp3_proto.dissector(buffer, pinfo, tree)
-    info("buffer: " .. buffer())
+    print("buffer: " .. buffer())
 
     if buffer:len() == 0 then
         return
@@ -574,9 +582,5 @@ function lwp3_proto.dissector(buffer, pinfo, tree)
 end
 
 bluetooth_table = DissectorTable.get("bluetooth.uuid")
--- LEGO Hub characteristic UUID
+-- LWP3 Hub characteristic UUID
 bluetooth_table:add("00001624-1212-efde-1623-785feabcd123", lwp3_proto)
--- LEGO Hub Bootloader service UUID
-bluetooth_table:add("00001625-1212-efde-1623-785feabcd123", lwp3_proto)
--- LEGO Hub Bootloader characteristic UUID
-bluetooth_table:add("00001626-1212-efde-1623-785feabcd123", lwp3_proto)
