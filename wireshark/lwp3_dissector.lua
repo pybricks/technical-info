@@ -1,5 +1,5 @@
 -- Wireshark dissector for LEGO Wireless Protocol v3
--- Copyright (C) 2018 David Lechner <david@lechnology.com>
+-- Copyright (C) 2018,2021 David Lechner <david@lechnology.com>
 --
 -- This program is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -75,6 +75,15 @@ lwp3_proto.fields.hub_io_sw_ver = ProtoField.string("lwp3.hub_io.sw_ver", "Softw
 lwp3_proto.fields.hub_io_port_id_a = ProtoField.uint8("lwp3.hub_io.port_id_a", "Port ID A", base.HEX)
 lwp3_proto.fields.hub_io_port_id_b = ProtoField.uint8("lwp3.hub_io.port_id_b", "Port ID B", base.HEX)
 
+-- Port commands
+lwp3_proto.fields.port_id = ProtoField.uint8("lwp3.port_id", "Port ID", base.DEC)
+lwp3_proto.fields.port_mode = ProtoField.uint8("lwp3.port_mode", "Mode", base.DEC)
+lwp3_proto.fields.port_delta_interval = ProtoField.uint32("lwp3.port_delta_interval", "Delta Interval", base.DEC)
+lwp3_proto.fields.port_notification_enabled = ProtoField.uint8("lwp3.port_notification_enabled", "Notification Enabled", base.DEC)
+lwp3_proto.fields.port_data = ProtoField.bytes("lwp3.port_data", "Data", base.SPACE)
+lwp3_proto.fields.port_startup_and_completion = ProtoField.uint8("lwp3.port_startup_and_completion", "Startup and Completion", base.HEX)
+lwp3_proto.fields.port_output_subcommand = ProtoField.uint8("lwp3.port_output_subcommand", "Subcommand", base.HEX)
+lwp3_proto.fields.port_payload = ProtoField.bytes("lwp3.port_payload", "Payload", base.SPACE)
 
 ---- Enmerations: lookup tables for enum values ----
 
@@ -189,6 +198,13 @@ end
 -- parses a 2-byte unsigned integer
 function parse_uint16(range, offset, subtree, field)
     local range = range:range(offset, 2)
+    local value = range:le_uint()
+    subtree:add_le(field, range, value)
+end
+
+-- parses a 4-byte unsigned integer
+function parse_uint32(range, offset, subtree, field)
+    local range = range:range(offset, 4)
     local value = range:le_uint()
     subtree:add_le(field, range, value)
 end
@@ -439,6 +455,93 @@ function parse_hub_attached_io(range, subtree)
     if event == 0x02 then
         parse_port_id(range, 4, subtree, lwp3_proto.fields.hub_io_port_id_a)
         parse_port_id(range, 5, subtree, lwp3_proto.fields.hub_io_port_id_b)
+    end
+end
+
+-- Parses a Port Input Format Setup (Single) (0x41) message
+function parse_port_setup_single(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    parse_uint8(range, 1, subtree, lwp3_proto.fields.port_mode)
+    parse_uint32(range, 2, subtree, lwp3_proto.fields.port_delta_interval)
+    parse_uint8(range, 2, subtree, lwp3_proto.fields.port_notification_enabled)
+end
+
+-- Parses a Port Value (Single) (0x45) message
+function parse_port_val_single(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    
+    -- TODO: The interpretation of this data depends on previous messages
+    -- received. There could also be additional ports in the same message.
+    local data_range = range(1)
+    local data_tree = subtree:add(lwp3_proto.fields.port_data, data_range)
+    data_tree:append_text(" (" .. data_range:len() .. " bytes)")
+end
+
+-- Parses a Port Input Format (Single) (0x47) message
+function parse_port_fmt_single(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    parse_uint8(range, 1, subtree, lwp3_proto.fields.port_mode)
+    parse_uint32(range, 2, subtree, lwp3_proto.fields.port_delta_interval)
+    parse_uint8(range, 2, subtree, lwp3_proto.fields.port_notification_enabled)
+end
+
+-- Parses a Port Output Command (0x81) message
+function parse_port_out_cmd(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+
+    -- startup and completion
+    local sc_range = range:range(1, 1)
+    local sc_value = sc_range:le_uint()
+    local sc_tree = subtree:add_le(lwp3_proto.fields.port_startup_and_completion, sc_range, sc_value)
+
+    -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#st-comp
+    local startup = {
+        [0x0] = "Buffer if necessary",
+        [0x1] = "Execute immediately",
+    }
+    local completion = {
+        [0x0] = "No action",
+        [0x1] = "Command feedback",
+    }
+
+    sc_tree:append_text(" (Startup: " .. startup[bit32.rshift(sc_value, 4)] .. ", Completion: " .. completion[bit32.band(sc_value, 0xf)] .. ")")
+
+    -- subcommand
+    local subcommand_range = range:range(2, 1)
+    local subcommand_value = subcommand_range:le_uint()
+    local subcommand_tree = subtree:add_le(lwp3_proto.fields.port_output_subcommand, subcommand_range, subcommand_value)
+
+    local subcommand = {
+        [0x01] = "StartPower(Power)",
+        [0x02] = "StartPower(Power1, Power2)",
+        [0x05] = "SetAccTime (Time, ProfileNo)",
+        [0x06] = "SetDecTime (Time, ProfileNo)",
+        [0x07] = "StartSpeed (Speed, MaxPower, UseProfile)",
+        [0x08] = "StartSpeed (Speed1, Speed2, MaxPower, UseProfile)",
+        [0x09] = "StartSpeedForTime (Time, Speed, MaxPower, EndState, UseProfile)",
+        [0x0A] = "StartSpeedForTime (Time, Speed, MaxPower, EndState, UseProfile)",
+        [0x0B] = "StartSpeedForDegrees(Degrees, Speed, MaxPower, EndState, UseProfile)",
+        [0x0C] = "StartSpeedForDegrees(Degrees, SpeedL, SpeedR, MaxPower, EndState, UseProfile)",
+        [0x0D] = "GotoAbsolutePosition(AbsPos, Speed, MaxPower, EndState, UseProfile)",
+        [0x0E] = "GotoAbsolutePosition(AbsPos1, AbsPos2, Speed, MaxPower, EndState, UseProfile)",
+        [0x50] = "WriteDirect(Byte[0],Byte[0 + n])",
+        [0x51] = "WriteDirectModeData()",
+    }
+
+    subcommand_tree:append_text(" (" .. subcommand[subcommand_value] .. ")")
+    
+    -- payload
+    if subcommand_value == 0x51 then
+        -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#encoding-of-writedirectmodedata-0x81-0x51
+        parse_uint8(range, 3, subtree, lwp3_proto.fields.port_mode)
+        local payload_range = range(4)
+        local payload_tree = subtree:add(lwp3_proto.fields.port_payload, payload_range)
+        payload_tree:append_text(" (" .. payload_range:len() .. " bytes)")
+    else
+        -- TODO: The payload could be interpreted further based on the subcommand.
+        local payload_range = range(3)
+        local payload_tree = subtree:add(lwp3_proto.fields.port_payload, payload_range)
+        payload_tree:append_text(" (" .. payload_range:len() .. " bytes)")
     end
 end
 
