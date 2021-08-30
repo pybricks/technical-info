@@ -85,6 +85,7 @@ lwp3_proto.fields.port_data = ProtoField.bytes("lwp3.port_data", "Data", base.SP
 lwp3_proto.fields.port_startup_and_completion = ProtoField.uint8("lwp3.port_startup_and_completion", "Startup and Completion", base.HEX)
 lwp3_proto.fields.port_output_subcommand = ProtoField.uint8("lwp3.port_output_subcommand", "Subcommand", base.HEX)
 lwp3_proto.fields.port_payload = ProtoField.bytes("lwp3.port_payload", "Payload", base.SPACE)
+lwp3_proto.fields.port_info_type = ProtoField.uint8("lwp3.port_info_type", "Info Type", base.HEX)
 
 ---- Enmerations: lookup tables for enum values ----
 
@@ -341,6 +342,21 @@ function parse_type_id(range, offset, subtree, field)
     type_id_tree:append_text(" (" .. type_ids[value] .. ")")
 end
 
+-- parses a 1-byte info type
+function parse_port_info_type(range, offset, subtree, field)
+    local range = range:range(offset, 1)
+    local value = range:le_uint()
+    local tree = subtree:add_le(field, range, value)
+
+    local info_type = {
+        [0x00] = "Port Value",
+        [0x01] = "Mode Info",
+        [0x02] = "Possible Mode Combinations",
+    }
+
+    tree:append_text(" (" .. info_type[value] .. ")")
+end
+
 
 ---- Message parsers: parse the data of specific message types ----
 
@@ -446,6 +462,7 @@ function parse_hub_prop(range, subtree)
     end
 end
 
+-- Parses a hub alert (0x03) message
 function parse_hub_alert(range, subtree)
     local alert_type_range = range:range(0, 1)
     local alert_type = alert_type_range:le_uint()
@@ -515,6 +532,12 @@ function parse_hub_attached_io(range, subtree)
         parse_port_id(range, 4, subtree, lwp3_proto.fields.hub_io_port_id_a)
         parse_port_id(range, 5, subtree, lwp3_proto.fields.hub_io_port_id_b)
     end
+end
+
+-- Parses a Port Information Request (0x21) message
+function parse_port_info_req(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    parse_port_info_type(range, 1, subtree, lwp3_proto.fields.port_info_type)
 end
 
 -- Parses a Port Input Format Setup (Single) (0x41) message
