@@ -86,6 +86,7 @@ lwp3_proto.fields.port_startup_and_completion = ProtoField.uint8("lwp3.port_star
 lwp3_proto.fields.port_output_subcommand = ProtoField.uint8("lwp3.port_output_subcommand", "Subcommand", base.HEX)
 lwp3_proto.fields.port_payload = ProtoField.bytes("lwp3.port_payload", "Payload", base.SPACE)
 lwp3_proto.fields.port_info_type = ProtoField.uint8("lwp3.port_info_type", "Info Type", base.HEX)
+lwp3_proto.fields.port_feedback = ProtoField.uint8("lwp3.port_feedback", "Feedback", base.HEX)
 
 ---- Enmerations: lookup tables for enum values ----
 
@@ -228,6 +229,26 @@ local last_network_ids = {
     [255] = "DON’T CARE - NOT Implemented",
 }
 
+
+---- generic helper functions -----
+
+--- join_flags joins the text representation of bit flags with a delimiter.
+-- @param value         the value containg bit flags
+-- @param map           a table mapping bit flags to strings
+-- @param delimiter     a string that will inserted inbetween the text values
+-- @return              a string like
+function join_flags(value, map, delimeter)
+    local list = {}
+
+    for k, v in pairs(map) do
+        if bit32.band(value, k) ~= 0 then
+            table.insert(list, v)
+        end
+    end
+
+    return table.concat(list, delimeter)
+end
+
 ---- Value parsers: parse single values and add them to the tree ----
 
 -- parses a string
@@ -357,6 +378,22 @@ function parse_port_info_type(range, offset, subtree, field)
     tree:append_text(" (" .. info_type[value] .. ")")
 end
 
+-- parses a 1-byte port output feedback
+function parse_port_feedback(range, offset, subtree, field)
+    local range = range:range(offset, 1)
+    local value = range:le_uint()
+    local tree = subtree:add_le(field, range, value)
+
+    local feedback = {
+        [0x01] = "Buffer Empty + Command In Progress",
+        [0x02] = "Buffer Empty + Command Completed",
+        [0x04] = "Current Command(s) Discarded",
+        [0x08] = "Idle",
+        [0x10] = "Busy/Full",
+    }
+
+    tree:append_text(" (" .. join_flags(value, feedback, "|") .. ")")
+end
 
 ---- Message parsers: parse the data of specific message types ----
 
@@ -627,6 +664,23 @@ function parse_port_out_cmd(range, subtree)
     end
 end
 
+-- Port Output Command Feedback (0x82) message
+function parse_port_out_cmd_feedback(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    parse_port_feedback(range, 1, subtree, lwp3_proto.fields.port_feedback)
+
+    -- additional ports are optional
+
+    if range:len() > 2 then
+        parse_port_id(range, 2, subtree, lwp3_proto.fields.port_id)
+        parse_port_feedback(range, 3, subtree, lwp3_proto.fields.port_feedback)
+    end
+
+    if range:len() > 4 then
+        parse_port_id(range, 4, subtree, lwp3_proto.fields.port_id)
+        parse_port_feedback(range, 5, subtree, lwp3_proto.fields.port_feedback)
+    end
+end
 
 ---- message types: table of possible message types and subcommands ----
 
