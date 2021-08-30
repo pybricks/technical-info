@@ -58,6 +58,7 @@ lwp3_proto.fields.hub_prop_hw_net_id = ProtoField.uint8("lwp3.hub_prop.hw_net_id
 lwp3_proto.fields.hub_prop_bd_addr = ProtoField.ether("lwp3.hub_prop.bd_addr", "Bluetooth Address")
 lwp3_proto.fields.hub_prop_loader_bd_addr = ProtoField.ether("lwp3.hub_prop.loader_bd_addr", "Bootloader Bluetooth Address")
 lwp3_proto.fields.hub_prop_hw_net_fam = ProtoField.uint8("lwp3.hub_prop.hw_net_fam", "Hardware Network Family", base.HEX)
+lwp3_proto.fields.hub_prop_volume = ProtoField.uint8("lwp3.hub_prop.volume", "Volume", base.DEC)
 
 -- Hub Alerts
 -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#hub-alerts
@@ -418,6 +419,11 @@ local hub_properties = {
     [0x0F] = {
         name = "Hardware Network Family",
         field = lwp3_proto.fields.hub_prop_hw_net_fam,
+        parse_update_payload = parse_uint8,
+    },
+    [0x12] = {
+        name = "Volume level",
+        field = lwp3_proto.fields.hub_prop_volume,
         parse_update_payload = parse_uint8,
     },
 }
