@@ -116,26 +116,6 @@ local device_numbers = {
     [0x81] = "Technic Large Hub",
 }
 
--- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#port-id
--- TODO: figure out how to do ranges instead of listing all 256 possibile values
-local port_ids = {
-    [0x00] = "Port 0",
-    [0x01] = "Port 1",
-    [0x02] = "Port 2",
-    [0x03] = "Port 3",
-    [0x32] = "Port 50",
-    [0x33] = "Port 51",
-    [0x34] = "Port 52",
-    [0x35] = "Port 53",
-    [0x36] = "Port 54",
-    [0x37] = "Port 55",
-    [0x38] = "Port 56",
-    [0x39] = "Port 57",
-    [0x3A] = "Port 58",
-    [0x3B] = "Port 59",
-    [0x3C] = "Port 60",
-}
-
 -- IO Type ID
 -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#io-type-id
 local type_ids = {
@@ -276,7 +256,6 @@ function parse_port_id(range, offset, subtree, field)
     local range = range:range(offset, 1)
     local value = range:le_int()
     local port_id_tree = subtree:add_le(field, range, value)
-    port_id_tree:append_text(" (" .. port_ids[value] .. ")")
 end
 
 -- parses a 2-byte type id
