@@ -502,7 +502,8 @@ function parse_hub_prop(range, subtree)
     local operation_tree = subtree:add_le(lwp3_proto.fields.operation, operation_range, operation)
     operation_tree:append_text(" (" .. operations[operation] .. ")")
 
-    if operation == 0x06 then
+    -- set (0x01) and update (0x06) have payload
+    if operation == 0x01 or operation == 0x06 then
         prop_info.parse_update_payload(range, 2, subtree, prop_info.field)
     end
 end
