@@ -80,6 +80,9 @@ lwp3_proto.fields.hub_io_sw_ver = ProtoField.string("lwp3.hub_io.sw_ver", "Softw
 lwp3_proto.fields.hub_io_port_id_a = ProtoField.uint8("lwp3.hub_io.port_id_a", "Port ID A", base.HEX)
 lwp3_proto.fields.hub_io_port_id_b = ProtoField.uint8("lwp3.hub_io.port_id_b", "Port ID B", base.HEX)
 
+-- Firmware commands
+lwp3_proto.fields.safety_string = ProtoField.string("lwp3.safety_string", "Safety String")
+
 -- Port commands
 lwp3_proto.fields.port_id = ProtoField.uint8("lwp3.port_id", "Port ID", base.DEC)
 lwp3_proto.fields.port_mode = ProtoField.uint8("lwp3.port_mode", "Mode", base.DEC)
@@ -595,6 +598,11 @@ function parse_hub_attached_io(range, subtree)
         parse_port_id(range, 4, subtree, lwp3_proto.fields.hub_io_port_id_a)
         parse_port_id(range, 5, subtree, lwp3_proto.fields.hub_io_port_id_b)
     end
+end
+
+-- Parses a Go Into Boot Mode (0x10) message
+function parse_fw_boot_mode(range, subtree)
+    parse_string(range, 0, subtree, lwp3_proto.fields.safety_string)
 end
 
 -- Parses a Port Information Request (0x21) message
