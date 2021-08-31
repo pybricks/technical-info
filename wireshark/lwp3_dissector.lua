@@ -41,6 +41,7 @@ lwp3_proto.fields.msg_type = ProtoField.uint8("lwp3.msg_type", "Message Type", b
 lwp3_proto.fields.property = ProtoField.uint8("lwp3.property", "Property", base.HEX)
 lwp3_proto.fields.operation = ProtoField.uint8("lwp3.operation", "Property Operation", base.HEX)
 
+
 -- Hub Property Payload
 -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#hub-property-payload
 lwp3_proto.fields.hub_prop_adv_name = ProtoField.string("lwp3.hub_prop.adv_name", "Advertising Name")
@@ -59,6 +60,9 @@ lwp3_proto.fields.hub_prop_bd_addr = ProtoField.ether("lwp3.hub_prop.bd_addr", "
 lwp3_proto.fields.hub_prop_loader_bd_addr = ProtoField.ether("lwp3.hub_prop.loader_bd_addr", "Bootloader Bluetooth Address")
 lwp3_proto.fields.hub_prop_hw_net_fam = ProtoField.uint8("lwp3.hub_prop.hw_net_fam", "Hardware Network Family", base.HEX)
 lwp3_proto.fields.hub_prop_volume = ProtoField.uint8("lwp3.hub_prop.volume", "Volume", base.DEC)
+
+-- Hub Actions
+lwp3_proto.fields.hub_action = ProtoField.uint8("lwp3.hub_action", "Action", base.HEX)
 
 -- Hub Alerts
 -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#hub-alerts
@@ -498,6 +502,27 @@ function parse_hub_prop(range, subtree)
     if operation == 0x06 then
         prop_info.parse_update_payload(range, 2, subtree, prop_info.field)
     end
+end
+
+-- Parses a hub action (0x02) message
+function parse_hub_action(range, subtree)
+    local action_range = range:range(0, 1)
+    local action_value = action_range:le_uint()
+    local action_tree = subtree:add_le(lwp3_proto.fields.hub_action, action_range, action_value)
+
+    local hub_action = {
+        [0x01] = "Switch Off Hub",
+        [0x02] = "Disconnect",
+        [0x03] = "VCC Port Control On",
+        [0x04] = "VCC Port Control Off",
+        [0x05] = "Activate BUSY Indication",
+        [0x06] = "Reset BUSY Indication",
+        [0x30] = "Hub Will Switch Off",
+        [0x31] = "Hub Will Disconnect",
+        [0x32] = "Hub Will Go Into Boot Mode",
+    }
+
+    action_tree:append_text(" (" .. hub_action[action_value] .. ")")
 end
 
 -- Parses a hub alert (0x03) message
