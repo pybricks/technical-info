@@ -117,6 +117,7 @@ local device_numbers = {
     [0x42] = "2 Port Handset",
     [0x80] = "Technic Medium Hub",
     [0x81] = "Technic Large Hub",
+    [0x83] = "Technic Small Hub",
 }
 
 -- IO Type ID
