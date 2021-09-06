@@ -138,11 +138,11 @@ USB
 | 0x0694 | 0x0002 | LEGO MINDSTORMS NXT |
 | 0x03eb | 0x6124 | LEGO MINDSTORMS NXT in firmware update mode (Atmel SAM-BA mode) |
 | 0x0694 | 0x0003 | LEGO WeDo 1.0 USB Hub |
-| 0x0694 | 0x0004 | ? |
 | 0x0694 | 0x0005 | LEGO MINDSTORMS EV3 |
 | 0x0694 | 0x0006 | LEGO MINDSTORMS EV3 in firmware update mode |
-| 0x0694 | 0x0007 | ? |
 | 0x0694 | 0x0008 | LEGO Technic Large Hub in DFU mode (SPIKE Prime) |
 | 0x0694 | 0x0009 | LEGO Technic Large Hub (SPIKE Prime) |
+| 0x0694 | 0x000C | LEGO Technic Small Hub in DFU mode (SPIKE Essential) |
+| 0x0694 | 0x000D | LEGO Technic Small Hub (SPIKE Essential) |
 | 0x0694 | 0x0010 | LEGO Technic Large Hub (MINDSTORMS Inventor) |
 | 0x0694 | 0x0011 | LEGO Technic Large Hub in DFU mode (MINDSTORMS Inventor) |
