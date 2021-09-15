@@ -7,16 +7,16 @@ Hub Type IDs
 | ID (hex) | Variant | Description | LEGO | Bricklink |
 |-|-|-|-|-|
 | 0 (0x00) | *N/A* | WeDo 2.0 hub (LPF2 Smart Hub 2 I/O) | [45301](https://education.lego.com/en-us/products/wedo-2-0-smart-hub-by-lego-education/45301) | [19071c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=19071c01#T=C) |
-| 32 (0x20) | *N/A* | DUPLO Train Hub | []() | [28743c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=28743c01&idColor=11#T=C&C=11) |
+| 32 (0x20) | *N/A* | DUPLO Train Hub (?) | []() | [28743c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=28743c01&idColor=11#T=C&C=11) |
 | 64 (0x40) | *N/A* | BOOST Move Hub (JAJUR1) | [88006](https://www.lego.com/en-us/product/move-hub-88006) | [bb0894c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb0894c01&idColor=1#T=C&C=1) |
 | 65 (0x41) | *N/A* | Powered UP 2-port Smart Hub (Hub No. 4) | [88009](https://www.lego.com/en-us/product/hub-88009) | [bb0892c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb0892c01&idColor=1#T=C&C=1) |
-| 66 (0x42) | *N/A* | Powered UP Handset (remote) | [88010](https://www.lego.com/en-us/product/remote-control-88010) | [28739c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=28739c01&idColor=1#T=C&C=1) |
-| 67 (0x43) | *N/A* | Mario | [71360](https://www.lego.com/en-us/product/adventures-with-mario-starter-course-71360) | [mar0007](https://www.bricklink.com/v2/catalog/catalogitem.page?M=mar0007) |
-| 68 (0x44) | *N/A* | Luigi | [71387](https://www.lego.com/en-us/product/adventures-with-luigi-starter-course-71387) | [mar0062](https://www.bricklink.com/v2/catalog/catalogitem.page?M=mar0062) |
+| 66 (0x42) | *N/A* | Powered UP Handset (Handset No. 2) | [88010](https://www.lego.com/en-us/product/remote-control-88010) | [28739c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=28739c01&idColor=1#T=C&C=1) |
+| 67 (0x43) | *N/A* | Mario (LEAF No. 1) | [71360](https://www.lego.com/en-us/product/adventures-with-mario-starter-course-71360) | [mar0007](https://www.bricklink.com/v2/catalog/catalogitem.page?M=mar0007) |
+| 68 (0x44) | *N/A* | Luigi (LEAF No. 2) | [71387](https://www.lego.com/en-us/product/adventures-with-luigi-starter-course-71387) | [mar0062](https://www.bricklink.com/v2/catalog/catalogitem.page?M=mar0062) |
 | 128 (0x80) | *N/A* | Technic Control+ Hub (Hub No. 2) | [88012](https://www.lego.com/en-us/product/technic-hub-88012) | [bb0961c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb0961c01&idColor=86#T=C&C=86) |
 | 129 (0x81) | 0 | Technic Large Hub - SPIKE Prime (Hub No. 6) | [45601](https://education.lego.com/en-us/products/lego-technic-large-hub-for-spike-prime-/45601) | [bb1142c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb1142c01&idColor=3#T=C&C=3) |
 | 129 (0x81) | 1 | Technic Large Hub - MINDSTORMS Robot Inventor (Hub No. 6) | [51515](https://www.lego.com/en-us/product/robot-inventor-51515) | [67718c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=67718c01#T=C&C=39) |
-| 131 (0x83) | 0 | Technic Small Hub - SPIKE Essential (Hub No. ?) | [45609](https://education.lego.com/en-us/products/lego-technic-small-hub/45609) | []() |
+| 131 (0x83) | 0 | Technic Small Hub - SPIKE Essential (Hub No. 7) | [45609](https://education.lego.com/en-us/products/lego-technic-small-hub/45609) | []() |
 
 
 I/O Device Type IDs
