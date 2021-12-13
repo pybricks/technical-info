@@ -177,7 +177,7 @@ Example, LEGO BOOST Color and Distance sensor:
 
 The message is formatted as follows::
 
-    MESSAGE_CMD | LENGTH_<n> | CMD_SELECT, <data>, <checksum>
+    MESSAGE_CMD | LENGTH_<n> | CMD_WRITE, <data>, <checksum>
 
 `<data>` is `<n>` bytes of device-specific data.
 
@@ -187,7 +187,7 @@ Example, LEGO EV3 Gyro sensor:
       ^     ^     ^
       |     |     checksum
       |     reset command
-      MESSAGE_CMD | LENGTH_1 | CMD_SELECT
+      MESSAGE_CMD | LENGTH_1 | CMD_WRITE
 
 Note: the value for the reset command comes from EV3-G software. Not sure if it
 actually does anything.
