@@ -7,6 +7,7 @@ explicitly stated otherwise.
 
 Note: Identifier names used here come from [lms2012.h][1] and [d_uart_mod.c][2].
 Other names are inspired by [LWP3][3]. Some new identifier names are invented.
+Identifiers currently used by PyBricks are available from [lego_uart.h][4].
 
 Conventions: In the format specifiers below, `[]` means that the enclosed content
 is optional and `<>` means that the content is variable and should be replaced
@@ -15,7 +16,7 @@ with a suitable value.
 [1]: https://github.com/mindboards/ev3sources/blob/78ebaf5b6f8fe31cc17aa5dce0f8e4916a4fc072/lms2012/lms2012/source/lms2012.h
 [2]: https://github.com/mindboards/ev3sources/blob/78ebaf5b6f8fe31cc17aa5dce0f8e4916a4fc072/lms2012/d_uart/Linuxmod_AM1808/d_uart_mod.c
 [3]: https://lego.github.io/lego-ble-wireless-protocol-docs/
-
+[4]: https://github.com/pybricks/pybricks-micropython/blob/master/lib/lego/lego_uart.h
 
 ## UART Device Synchronization
 
