@@ -564,7 +564,7 @@ the device (see previous section for details):
 
 Example, LEGO BOOST Color and Distance sensor:
 
-     0x46, 0x00, 0x9b, 0xC5, 0x00, 0x3a
+     0x46, 0x00, 0xb9, 0xC5, 0x00, 0x3a
       ^     ^     ^     ^     ^     ^
       |     |     |     |     |     checksum
       |     |     |     |     color index = 0
