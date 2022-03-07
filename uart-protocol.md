@@ -7,6 +7,7 @@ explicitly stated otherwise.
 
 Note: Identifier names used here come from [lms2012.h][1] and [d_uart_mod.c][2].
 Other names are inspired by [LWP3][3]. Some new identifier names are invented.
+Identifiers currently used by PyBricks are available from [lego_uart.h][4].
 
 Conventions: In the format specifiers below, `[]` means that the enclosed content
 is optional and `<>` means that the content is variable and should be replaced
@@ -15,7 +16,7 @@ with a suitable value.
 [1]: https://github.com/mindboards/ev3sources/blob/78ebaf5b6f8fe31cc17aa5dce0f8e4916a4fc072/lms2012/lms2012/source/lms2012.h
 [2]: https://github.com/mindboards/ev3sources/blob/78ebaf5b6f8fe31cc17aa5dce0f8e4916a4fc072/lms2012/d_uart/Linuxmod_AM1808/d_uart_mod.c
 [3]: https://lego.github.io/lego-ble-wireless-protocol-docs/
-
+[4]: https://github.com/pybricks/pybricks-micropython/blob/master/lib/lego/lego_uart.h
 
 ## UART Device Synchronization
 
@@ -388,17 +389,17 @@ Example, LEGO BOOST Color and Distance sensor:
       |     INFO_SI
       MESSAGE_INFO | LENGTH_8 | MODE_2
 
-#### INFO_SYMBOL
+#### INFO_UNITS
 
-`INFO_SYMBOL` provide a string giving the units of measurement for a mode. The
+`INFO_UNITS` provide a string giving the units of measurement for a mode. The
 value is limited to 4 characters (not including the null terminator). This
 message is optional. If omitted, it is assumed to be an empty string.
 
 This message is formatted as follows:
 
-    MESSAGE_INFO | LENGTH_<n> | MODE_<m>, INFO_SYMBOL [| INFO_MODE_PLUS_8], <symbol>, <checksum>
+    MESSAGE_INFO | LENGTH_<n> | MODE_<m>, INFO_UNITS [| INFO_MODE_PLUS_8], <unit>, <checksum>
 
-`<symbol>` is the units of measurement encoded using ASCII characters. The
+`<unit>` is the units of measurement encoded using ASCII characters. The
 length `<n>` must be a power of 2, so unused data bytes should be set to `0x00`.
 The data does not need to include a null terminator, e.g. if the name is 4
 characters, the length can be set to 4.
@@ -412,9 +413,12 @@ Example, LEGO BOOST Color and Distance sensor:
     0x92, 0x04, 0x43, 0x4e, 0x54, 0x00, 0x30
       ^     ^     ^_________________^    ^
       |     |     |                      checksum
-      |     |     symbol = "CNT\0"
-      |     INFO_SYMBOL
+      |     |     unit = "CNT\0"
+      |     INFO_UNITS
       MESSAGE_INFO | LENGTH_4 | MODE_2
+
+Note: The EV3 sources header files use the name `INFO_SYMBOL` instead of
+`INFO_UNITS` for this feature.
 
 #### INFO_MAPPING
 
@@ -452,9 +456,9 @@ Example, LEGO BOOST Color and Distance sensor:
       |     INFO_MAPPING
       MESSAGE_INFO | LENGTH_2 | MODE_2
 
-#### INFO_MODE_COMBO
+#### INFO_MODE_COMBOS
 
-`INFO_MODE_COMBO` provides mode combination information for Powered Up devices.
+`INFO_MODE_COMBOS` provides mode combination information for Powered Up devices.
 This message appears after the `INFO_FORMAT` message on mode 0 only, making it
 more akin to `CMD_...` instead of `INFO_...`. This message is omitted on EV3
 sensors.
@@ -467,7 +471,7 @@ values since messages are limited to 32 bytes.
 
 The message is formatted as follows:
 
-    MESSAGE_INFO | LENGTH_<l> | MODE_8, INFO_MODE_COMBO, <data0>, [<data1>, [...] ], <checksum>
+    MESSAGE_INFO | LENGTH_<l> | MODE_8, INFO_MODE_COMBOS, <data0>, [<data1>, [...] ], <checksum>
 
 `<data1>` and `<data2>` are unknown 8-bit values.
 
@@ -476,8 +480,8 @@ Example, LEGO BOOST Color and Distance sensor:
     0x88, 0x06, 0x4f, 0x00, 0x3e
       ^     ^     ^_____^     ^
       |     |     |           checksum
-      |     |     combo[0] = 0x004f (modes 0, 1, 2, 3 and 6)
-      |     INFO_MODE_COMBO
+      |     |     combos[0] = 0x004f (modes 0, 1, 2, 3 and 6)
+      |     INFO_MODE_COMBOS
       MESSAGE_INFO | LENGTH_2 | MODE_0
 
 #### INFO_FORMAT
@@ -487,7 +491,7 @@ mode. This mode is required and must be the last `INFO_...` message for a mode.
 
 This message is formatted as follows:
 
-    MESSAGE_INFO | LENGTH_4 | MODE_<m>, INFO_SYMBOL [| INFO_MODE_PLUS_8], <data-sets>, <format>, <figures>, <decimals>, <checksum>
+    MESSAGE_INFO | LENGTH_4 | MODE_<m>, INFO_UNITS [| INFO_MODE_PLUS_8], <data-sets>, <format>, <figures>, <decimals>, <checksum>
 
 `<data-sets>` is the number of sensor data values for this mode. `<format>` is
 the data format (one of `DATAx`). `<data-sets>` times the size of `<format>`
@@ -563,7 +567,7 @@ the device (see previous section for details):
 
 Example, LEGO BOOST Color and Distance sensor:
 
-     0x46, 0x00, 0x9b, 0xC5, 0x00, 0x3a
+     0x46, 0x00, 0xb9, 0xC5, 0x00, 0x3a
       ^     ^     ^     ^     ^     ^
       |     |     |     |     |     checksum
       |     |     |     |     color index = 0
@@ -617,8 +621,8 @@ Example, LEGO BOOST Color and Distance sensor:
 #define   MODE_7                        0x07    // MODE 7 (or 15 if INFO_MODE_PLUS_8 bit is set)
 
 // CMD_EXT_MODE payload
-# define EXT_MODE_0                     0x00    // mode is < 8
-# define EXT_MODE_8                     0x08    // mode is >= 8
+#define   EXT_MODE_0                    0x00    // mode is < 8
+#define   EXT_MODE_8                    0x08    // mode is >= 8
 
 // SECOND INFO BYTE
 
@@ -626,9 +630,9 @@ Example, LEGO BOOST Color and Distance sensor:
 #define   INFO_RAW                      0x01    // INFO command - RAW     (device RAW value span)
 #define   INFO_PCT                      0x02    // INFO command - PCT     (device PCT value span)
 #define   INFO_SI                       0x03    // INFO command - SI      (device SI  value span)
-#define   INFO_SYMBOL                   0x04    // INFO command - SYMBOL  (device SI  unit symbol)
+#define   INFO_UNITS                    0x04    // INFO command - UNITS   (device SI  unit symbol)
 #define   INFO_MAPPING                  0x05    // INFO command - MAPPING (input/output value type flags)
-#define   INFO_MODE_COMBO               0x06    // INFO command - COMBO   (mode combinations - LPF2-only)
+#define   INFO_MODE_COMBOS              0x06    // INFO command - COMBOS  (mode combinations - LPF2-only)
 #define   INFO_UNK7                     0x07    // INFO command - unknown (LPF2-only)
 #define   INFO_UNK8                     0x08    // INFO command - unknown (LPF2-only)
 #define   INFO_UNK9                     0x09    // INFO command - unknown (LPF2-only)
