@@ -417,6 +417,9 @@ Example, LEGO BOOST Color and Distance sensor:
       |     INFO_UNITS
       MESSAGE_INFO | LENGTH_4 | MODE_2
 
+Note: The EV3 sources header files use the name `INFO_SYMBOL` instead of
+`INFO_UNITS` for this feature.
+
 #### INFO_MAPPING
 
 `INFO_MAPPING` provides mode mapping information for Powered Up devices. This
