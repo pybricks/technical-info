@@ -70,7 +70,7 @@ programmable brick).
 | 73 (0x49) | Mario built-in color barcode sensor | *N/A* | *N/A* |
 | 74 (0x4A) | Mario built-in pants sensor | *N/A* | *N/A* |
 | 75 (0x4B) | Technic Medium Angular Motor, gray | []() | [54696c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=54696c01&idColor=86#T=C&C=86) |
-| 76 (0x4C) | Technic Large Angular motor, gray | []() | []() |
+| 76 (0x4C) | Technic Large Angular motor, gray | [88017](https://www.lego.com/en-us/product/large-angular-motor-88017) | [54675c02](https://www.bricklink.com/v2/catalog/catalogitem.page?P=54675c02&idColor=85) |
 | 85 (0x55) | Mario built-in unknown | *N/A* | *N/A* |
 
 
