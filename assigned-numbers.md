@@ -93,34 +93,34 @@ LEGO-specific UUIDs:
 
 | 16-bit | 128-bit | Description |
 |-|-|-|
-| 1523 | 00001523-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 hub service |
-| 1524 | 00001524-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 name characteristic |
-| 1526 | 00001526-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 button state characteristic |
-| 1527 | 00001527-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 attached I/O characteristic |
-| 1528 | 00001528-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 low voltage alert characteristic |
-| 1529 | 00001529-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 high current alert characteristic |
-| 152A | 0000152A-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 low signal alert characteristic |
-| 152B | 0000152B-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 power off characteristic |
-| 152C | 0000152C-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 port vcc control characteristic |
-| 152D | 0000152D-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 battery type characteristic |
-| 152E | 0000152E-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 disconnect characteristic |
-| 1560 | 00001560-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input value characteristic |
-| 1561 | 00001561-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input format characteristic |
-| 1563 | 00001563-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input command characteristic |
-| 1565 | 00001565-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 output command characteristic |
-| 4F0E | 00004F0E-1212-EFDE-1523-785FEABCD123 | WeDo 2.0 input service |
-| 1623 | 00001623-1212-EFDE-1623-785FEABCD123 | Powered Up LWP3 hub service |
-| 1624 | 00001624-1212-EFDE-1623-785FEABCD123 | Powered Up LWP3 hub characteristic |
-| 1625 | 00001625-1212-EFDE-1623-785FEABCD123 | Powered Up LWP3 bootloader service |
-| 1626 | 00001626-1212-EFDE-1623-785FEABCD123 | Powered Up LWP3 bootloader characteristic |
+| 1523 | 00001523-1212-efde-1523-785feabcd123 | WeDo 2.0 hub service |
+| 1524 | 00001524-1212-efde-1523-785feabcd123 | WeDo 2.0 name characteristic |
+| 1526 | 00001526-1212-efde-1523-785feabcd123 | WeDo 2.0 button state characteristic |
+| 1527 | 00001527-1212-efde-1523-785feabcd123 | WeDo 2.0 attached I/O characteristic |
+| 1528 | 00001528-1212-efde-1523-785feabcd123 | WeDo 2.0 low voltage alert characteristic |
+| 1529 | 00001529-1212-efde-1523-785feabcd123 | WeDo 2.0 high current alert characteristic |
+| 152A | 0000152a-1212-efde-1523-785feabcd123 | WeDo 2.0 low signal alert characteristic |
+| 152B | 0000152b-1212-efde-1523-785feabcd123 | WeDo 2.0 power off characteristic |
+| 152C | 0000152c-1212-efde-1523-785feabcd123 | WeDo 2.0 port vcc control characteristic |
+| 152D | 0000152d-1212-efde-1523-785feabcd123 | WeDo 2.0 battery type characteristic |
+| 152E | 0000152e-1212-efde-1523-785feabcd123 | WeDo 2.0 disconnect characteristic |
+| 1560 | 00001560-1212-efde-1523-785feabcd123 | WeDo 2.0 input value characteristic |
+| 1561 | 00001561-1212-efde-1523-785feabcd123 | WeDo 2.0 input format characteristic |
+| 1563 | 00001563-1212-efde-1523-785feabcd123 | WeDo 2.0 input command characteristic |
+| 1565 | 00001565-1212-efde-1523-785feabcd123 | WeDo 2.0 output command characteristic |
+| 4F0E | 00004f0e-1212-efde-1523-785feabcd123 | WeDo 2.0 input service |
+| 1623 | 00001623-1212-efde-1623-785feabcd123 | Powered Up LWP3 hub service |
+| 1624 | 00001624-1212-efde-1623-785feabcd123 | Powered Up LWP3 hub characteristic |
+| 1625 | 00001625-1212-efde-1623-785feabcd123 | Powered Up LWP3 bootloader service |
+| 1626 | 00001626-1212-efde-1623-785feabcd123 | Powered Up LWP3 bootloader characteristic |
 
 Pybricks-specific UUIDs:
 
 | 16-bit | 128-bit | Description |
 |-|-|-|
-| 0001 | C5F50001-8280-46DA-89F4-6D8051E4AEEF | Pybricks service |
-| 0002 | C5F50002-8280-46DA-89F4-6D8051E4AEEF | Pybricks control characteristic |
-| 0003 | C5F50003-8280-46DA-89F4-6D8051E4AEEF | Pybricks stream characteristic |
+| 0001 | c5f50001-8280-46da-89f4-6d8051e4aeef | Pybricks service |
+| 0002 | c5f50002-8280-46da-89f4-6d8051e4aeef | Pybricks control characteristic |
+| 0003 | c5f50003-8280-46da-89f4-6d8051e4aeef | Pybricks stream characteristic |
 
 ### BLE Advertising Data
 
