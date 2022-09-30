@@ -62,9 +62,10 @@ programmable brick).
 | 58 (0x3A) | Powered Up hub IMU gyro | *N/A* | *N/A* |
 | 59 (0x3B) | Powered Up hub IMU position | *N/A* | *N/A* |
 | 60 (0x3C) | Powered Up hub IMU temperature | *N/A* | *N/A* |
-| 61 (0x3D) | SPIKE Prime Color Sensor | [45605](https://education.lego.com/en-us/products/lego-technic-color-sensor/45605) | [37308c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37308c01&idColor=11#T=C&C=11) |
-| 62 (0x3E) | SPIKE Prime Ultrasonic/Distance Sensor | [45604](https://education.lego.com/en-us/products/lego-technic-distance-sensor/45604) | [37316c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37316c01&idColor=11#T=C&C=11) |
-| 63 (0x3F) | SPIKE Prime Force Sensor | [45606](https://education.lego.com/en-us/products/lego-technic-force-sensor/45606) | [37312c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37312c01&idColor=11#T=C&C=11) |
+| 61 (0x3D) | Technic Color Sensor | [45605](https://education.lego.com/en-us/products/lego-technic-color-sensor/45605) | [37308c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37308c01&idColor=11#T=C&C=11) |
+| 62 (0x3E) | Technic Ultrasonic/Distance Sensor | [45604](https://education.lego.com/en-us/products/lego-technic-distance-sensor/45604) | [37316c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37316c01&idColor=11#T=C&C=11) |
+| 63 (0x3F) | Technic Force Sensor | [45606](https://education.lego.com/en-us/products/lego-technic-force-sensor/45606) | [37312c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37312c01&idColor=11#T=C&C=11) |
+| 64 (0x40) | Technic 3x3 Color Light Matrix | [45608](https://education.lego.com/en-us/products/lego-technic-color-light-matrix/45608) | *N/A* |
 | 70 (0x46) | Mario built-in unknown | *N/A* | *N/A* |
 | 71 (0x47) | Mario built-in IMU gesture sensor | *N/A* | *N/A* |
 | 73 (0x49) | Mario built-in color barcode sensor | *N/A* | *N/A* |
