@@ -106,6 +106,35 @@ For this version of the Pybricks Profile, this is exactly `1.2.0`.
 
 The following additions were made since v1.0.0.
 
+### Advertising Data
+
+The scan response now contains a *Service Data* entry with the *PnP ID*
+as described in the *Device Information Service*.
+
+### Services
+
+The following services have changed.
+#### Device Information Service
+
+The following characteristic is now required.
+
+##### PnP ID
+
+This characteristic identifies the type of device.
+
+The *Vendor ID Source Field* and and *Vendor ID Field* use an existing know ID
+for the vendor, for example, for LEGO, the source field will be 0x01 for
+*Bluetooth SIG-assigned Device ID* and the vendor ID is 0x0397 (LEGO's CID).
+
+The *Product ID Field* uses the *Hub Type IDs* from local [Assigned Numbers]
+document.
+
+[Assigned Numbers]: ./assigned-numbers.md
+
+The *Product Version Field* is the hub variant or 0 if there is no variant.
+For example, the MINDSTORMS Robot Inventor hub is variant 1 of the *Technic
+Large Hub*.
+
 #### Pybricks Service
 
 The Pybricks Service has been extend.
@@ -124,6 +153,15 @@ For this version of the Pybricks Profile, this is exactly `1.1.0`.
 ## Profile v1.0.0
 
 This section describes the requirements for the Pybricks Profile v1.0.0.
+
+### Advertising Data
+
+The advertisement data (connectable, undirected) contains the following:
+- Flags
+- Incomplete list of service UUIDs containing the Pybricks Service UUID.
+- Tx Power Level
+
+The scan response contains the hub name.
 
 ### Services
 
@@ -154,22 +192,6 @@ For this version of the Pybricks Profile, this is exactly `1.0.0`.
 
 [SemVer 1.0.0]: https://semver.org/spec/v1.0.0.html
 
-##### PnP ID
-
-This characteristic identifies the type of device.
-
-The *Vendor ID Source Field* and and *Vendor ID Field* use an existing know ID
-for the vendor, for example, for LEGO, the source field will be 0x01 for
-*Bluetooth SIG-assigned Device ID* and the vendor ID is 0x0397 (LEGO's CID).
-
-The *Product ID Field* uses the *Hub Type IDs* from local [Assigned Numbers]
-document.
-
-[Assigned Numbers]: ./assigned-numbers.md
-
-The *Product Version Field* is the hub variant or 0 if there is no variant.
-For example, the MINDSTORMS Robot Inventor hub is variant 1 of the *Technic
-Large Hub*.
 
 #### Nordic UART Service
 
