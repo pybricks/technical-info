@@ -64,6 +64,13 @@ The Pybricks Service has been extend.
       - Additional user RAM layout/usage may be inferred from the hub
         capabilities characteristic value.
 
+  - PBIO_PYBRICKS_COMMAND_REBOOT_TO_UPDATE_MODE = 5
+      - Requests to reset the hub in firmware update mode.
+      - Parameters:
+        - None.
+      - If the hub support this, the hub will reset immediately and therefore
+        Bluetooth will become disconnected and the GATT write request will fail.
+
 - User program download procedure:
   - Write PBIO_PYBRICKS_COMMAND_WRITE_USER_PROGRAM_META with `size` 0.
   - Write user program starting at `offset` 0 using
