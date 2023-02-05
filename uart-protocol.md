@@ -273,8 +273,8 @@ Flags are as follows (? means bit has been seen but function is unknown):
 
 | Byte | Bit | Description                      |
 |------|-----|----------------------------------|
-| 0    | 7   |                                  |
-| 0    | 6   | ?                                |
+| 0    | 7   | requires constant power on pin 2 |
+| 0    | 6   | requires constant power on pin 1 |
 | 0    | 5   | is a motor                       |
 | 0    | 4   | POWER                            |
 | 0    | 3   |                                  |
