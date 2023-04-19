@@ -3,6 +3,54 @@
 This document describes the Pybricks Bluetooth Low Energy profile used to
 communicate with hubs running Pybricks firmware.
 
+## Reference implementations
+
+Reference implementations are useful to see everything together since the
+remainder of this file is written in a sort of changelog format.
+
+### C
+
+https://github.com/pybricks/pybricks-micropython/blob/master/lib/pbio/include/pbio/protocol.h
+
+### Python
+
+https://github.com/pybricks/pybricksdev/blob/master/pybricksdev/ble/pybricks.py
+
+### Typescript
+
+https://github.com/pybricks/pybricks-code/blob/master/src/ble-pybricks-service/protocol.ts
+
+
+## Profile v1.3.0
+
+The following changes were made since v1.2.0.
+
+#### Pybricks Service
+
+The Pybricks Service has been extend.
+
+##### Pybricks Command/Event Characteristic
+
+- New command:
+
+  - PBIO_PYBRICKS_COMMAND_WRITE_STDIN = 6
+      - Requests to write to stdin on the hub.
+      - Parameters:
+        - `payload`: 0 to `max_char_size` - 1 bytes of data to be written to stdin.
+          (`max_char_size` is read from the hub capabilities characteristic.)
+
+- New event:
+
+  - PBIO_PYBRICKS_EVENT_WRITE_STDOUT = 1
+    - Payload variable number of bytes that were written to stdout. This can be
+      arbitrary binary data so text encoding is not guaranteed to be valid UTF-8.
+
+
+#### Nordic UART Service
+
+The Nordic UART Service is longer connected to stdio. It is now available for
+user-defined use.
+
 ## Profile v1.2.0
 
 The following changes were made since v1.1.0.
