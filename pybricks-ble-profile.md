@@ -45,6 +45,13 @@ The Pybricks Service has been extend.
     - Payload variable number of bytes that were written to stdout. This can be
       arbitrary binary data so text encoding is not guaranteed to be valid UTF-8.
 
+##### Pybricks Hub Capabilities Characteristic
+
+- New feature flags:
+  - PBIO_PYBRICKS_FEATURE_USER_PROG_FORMAT_MULTI_MPY_V6_1_NATIVE = 1 << 2
+    - Indicates that the hub supports user programs using the Pybricks
+      multi-mpy6 file format including native modules with MPY ABI v6.1.
+
 
 #### Nordic UART Service
 
