@@ -7,7 +7,7 @@ explicitly stated otherwise.
 
 Note: Identifier names used here come from [lms2012.h][1] and [d_uart_mod.c][2].
 Other names are inspired by [LWP3][3]. Some new identifier names are invented.
-Identifiers currently used by PyBricks are available from [lego_uart.h][4].
+Identifiers currently used by Pybricks are available from [lego_uart.h][4].
 
 Conventions: In the format specifiers below, `[]` means that the enclosed content
 is optional and `<>` means that the content is variable and should be replaced
