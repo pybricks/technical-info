@@ -55,7 +55,7 @@ The data portion of the Manufacturer Specific Data is encoded as follows:
         the value is a 32-bit signed int.
       - For `FLOAT` the length is always 4.
       - For `STR` and `BYTES`, the length can be 0 or greater.
-    - The type and length are packed into one byte using `(type << 3) | (length & 0x1F).
+    - The type and length are packed into one byte using `(type << 5) | (length & 0x1F)`.
   - The value encoding depends on the type.
     - `NONE`, `TRUE`, and `FALSE` have no value.
     - `INT` can be an 8-bit signed int, a 16-bit signed int or a 32-bit signed
