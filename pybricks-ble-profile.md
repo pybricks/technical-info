@@ -3,7 +3,7 @@
 This document describes the Pybricks Bluetooth Low Energy profile used to
 communicate with hubs running Pybricks firmware.
 
-Also see [Pybricks Bluetooth Low Energy Broadcast/Observe](./pybricks-ble-broadcast-observe).
+Also see [Pybricks Bluetooth Low Energy Broadcast/Observe](./pybricks-ble-broadcast-observe.md).
 
 ## Reference implementations
 
