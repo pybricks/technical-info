@@ -180,11 +180,14 @@ as described in the *Device Information Service*.
 The following services have changed.
 #### Device Information Service
 
-The following characteristic is now required.
+##### Software Revision String
+
+For this version of the Pybricks Profile, this is exactly `1.1.0`.
 
 ##### PnP ID
 
-This characteristic identifies the type of device.
+This characteristic identifies the type of device. This characteristic is
+required to be present.
 
 The *Vendor ID Source Field* and and *Vendor ID Field* use an existing know ID
 for the vendor, for example, for LEGO, the source field will be 0x01 for
@@ -207,12 +210,6 @@ The Pybricks Service has been extend.
 
 - PBIO_PYBRICKS_STATUS_SHUTDOWN = 7 is added to the
   PBIO_PYBRICKS_EVENT_STATUS_REPORT flags.
-
-#### Device Information Service
-
-##### Software Revision String
-
-For this version of the Pybricks Profile, this is exactly `1.1.0`.
 
 ## Profile v1.0.0
 
