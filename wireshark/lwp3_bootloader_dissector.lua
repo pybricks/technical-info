@@ -301,6 +301,11 @@ function lwp3bl_proto.dissector(buffer, pinfo, tree)
     cmd_info.parse_msg(buffer(1), pinfo, subtree)
 end
 
-bluetooth_table = DissectorTable.get("bluetooth.uuid")
 -- LWP3 Bootloader characteristic UUID
-bluetooth_table:add("00001626-1212-efde-1623-785feabcd123", lwp3bl_proto)
+bluetooth_uuid_table = DissectorTable.get("bluetooth.uuid")
+bluetooth_uuid_table:add("00001626-1212-efde-1623-785feabcd123", lwp3bl_proto)
+
+-- some times the UUID is cached so Wireshark doesn't pick it up so we need to
+-- add an entry for GATT handles as well
+bluetooth_gatt_table = DissectorTable.get("btatt.handle")
+bluetooth_gatt_table:add(0x0007, lwp3bl_proto)
