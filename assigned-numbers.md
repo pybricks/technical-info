@@ -17,7 +17,7 @@ Hub Type IDs
 | 128 (0x80) | *N/A* | Technic Control+ Hub (Hub No. 2) | [88012](https://www.lego.com/en-us/product/technic-hub-88012) | [bb0961c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb0961c01&idColor=86#T=C&C=86) |
 | 129 (0x81) | 0 | Technic Large Hub - SPIKE Prime (Hub No. 6) | [45601](https://education.lego.com/en-us/products/lego-technic-large-hub-for-spike-prime-/45601) | [bb1142c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb1142c01&idColor=3#T=C&C=3) |
 | 129 (0x81) | 1 | Technic Large Hub - MINDSTORMS Robot Inventor (Hub No. 6) | [51515](https://www.lego.com/en-us/product/robot-inventor-51515) | [67718c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=67718c01#T=C&C=39) |
-| 131 (0x83) | 0 | Technic Small Hub - SPIKE Essential (Hub No. 7) | [45609](https://education.lego.com/en-us/products/lego-technic-small-hub/45609) | []() |
+| 131 (0x83) | 0 | Technic Small Hub - SPIKE Essential (Hub No. 7) | [45609](https://education.lego.com/en-us/products/lego-technic-small-hub/45609) | [67351c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=67351c01) |
 
 
 I/O Device Type IDs
@@ -66,7 +66,7 @@ programmable brick).
 | 61 (0x3D) | Technic Color Sensor | [45605](https://education.lego.com/en-us/products/lego-technic-color-sensor/45605) | [37308c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37308c01&idColor=11#T=C&C=11) |
 | 62 (0x3E) | Technic Ultrasonic/Distance Sensor | [45604](https://education.lego.com/en-us/products/lego-technic-distance-sensor/45604) | [37316c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37316c01&idColor=11#T=C&C=11) |
 | 63 (0x3F) | Technic Force Sensor | [45606](https://education.lego.com/en-us/products/lego-technic-force-sensor/45606) | [37312c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=37312c01&idColor=11#T=C&C=11) |
-| 64 (0x40) | Technic 3x3 Color Light Matrix | [45608](https://education.lego.com/en-us/products/lego-technic-color-light-matrix/45608) | *N/A* |
+| 64 (0x40) | Technic 3x3 Color Light Matrix | [45608](https://education.lego.com/en-us/products/lego-technic-color-light-matrix/45608) | [47592c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=47592c01) |
 | 65 (0x41) | Technic Small Angular Motor | [45607](https://education.lego.com/en-us/products/lego-technic-small-angular-motor/45607) | [68488c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=68488c01#T=S&C=156) |
 | 70 (0x46) | Mario built-in unknown | *N/A* | *N/A* |
 | 71 (0x47) | Mario built-in IMU gesture sensor | *N/A* | *N/A* |
