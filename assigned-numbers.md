@@ -18,6 +18,7 @@ Hub Type IDs
 | 129 (0x81) | 0 | Technic Large Hub - SPIKE Prime (Hub No. 6) | [45601](https://education.lego.com/en-us/products/lego-technic-large-hub-for-spike-prime-/45601) | [bb1142c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb1142c01&idColor=3#T=C&C=3) |
 | 129 (0x81) | 1 | Technic Large Hub - MINDSTORMS Robot Inventor (Hub No. 6) | [51515](https://www.lego.com/en-us/product/robot-inventor-51515) | [67718c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=67718c01#T=C&C=39) |
 | 131 (0x83) | 0 | Technic Small Hub - SPIKE Essential (Hub No. 7) | [45609](https://education.lego.com/en-us/products/lego-technic-small-hub/45609) | [67351c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=67351c01) |
+| 132 (0x84) | 0 | Technic Move (Hub No. 19) | []() | [103479c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=103479c01#T=S&C=86&O={%22color%22:86,%22iconly%22:0}) |
 
 
 I/O Device Type IDs
@@ -75,6 +76,13 @@ programmable brick).
 | 75 (0x4B) | Technic Medium Angular Motor, gray | [88018](https://www.lego.com/en-us/product/medium-angular-motor-88018) | [54696c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=54696c01&idColor=86#T=C&C=86) |
 | 76 (0x4C) | Technic Large Angular motor, gray | [88017](https://www.lego.com/en-us/product/large-angular-motor-88017) | [54675c02](https://www.bricklink.com/v2/catalog/catalogitem.page?P=54675c02&idColor=85) |
 | 85 (0x55) | Mario built-in unknown | *N/A* | *N/A* |
+| 86 (0x56) | Technic Move hub built-in drive motor | *N/A* | *N/A* |
+| 87 (0x57) | Technic Move hub built-in steering motor | *N/A* | *N/A* |
+| 88 (0x58) | Technic Move hub built-in lights (6) | *N/A* | *N/A* |
+| 89 (0x59) | Technic Move hub built-in play VM | *N/A* | *N/A* |
+| 92 (0x5c) | Powered up hub unknown (ChgAct/PlyAct/Last/Total) | *N/A* | *N/A* |
+| 93 (0x5d) | Powered Up hub IMU orientation | *N/A* | *N/A* |
+| 94 (0x5e) | Powered Up hub unknown (GEST_BITMAP) | *N/A* | *N/A* |
 
 
 Bluetooth
@@ -116,6 +124,15 @@ LEGO-specific UUIDs:
 | 1624 | 00001624-1212-efde-1623-785feabcd123 | Powered Up LWP3 hub characteristic |
 | 1625 | 00001625-1212-efde-1623-785feabcd123 | Powered Up LWP3 bootloader service |
 | 1626 | 00001626-1212-efde-1623-785feabcd123 | Powered Up LWP3 bootloader characteristic |
+
+TI-specific UUIDs:
+
+| 16-bit | 128-bit | Description |
+|-|-|-|
+| ffc0 | f000ffc0-0451-4000-b000-000000000000 | TI OAD service |
+| ffc1 | f000ffc1-0451-4000-b000-000000000000 | TI OAD Image Identify characteristic |
+| ffc2 | f000ffc2-0451-4000-b000-000000000000 | TI OAD Image Block characteristic |
+| ffc5 | f000ffc5-0451-4000-b000-000000000000 | TI OAD Control Point characteristic |
 
 Pybricks-specific UUIDs:
 
