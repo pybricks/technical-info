@@ -124,6 +124,9 @@ LEGO-specific UUIDs:
 | 1624 | 00001624-1212-efde-1623-785feabcd123 | Powered Up LWP3 hub characteristic |
 | 1625 | 00001625-1212-efde-1623-785feabcd123 | Powered Up LWP3 bootloader service |
 | 1626 | 00001626-1212-efde-1623-785feabcd123 | Powered Up LWP3 bootloader characteristic |
+| 0000 | 0000fd02-0000-1000-8000-00805f9b34fb | SPIKE Prime service |
+| 0001 | 0000fd02-0001-1000-8000-00805f9b34fb | SPIKE Prime RX characteristic |
+| 0002 | 0000fd02-0002-1000-8000-00805f9b34fb | SPIKE Prime TX characteristic |
 
 TI-specific UUIDs:
 
