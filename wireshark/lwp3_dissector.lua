@@ -59,7 +59,12 @@ lwp3_proto.fields.hub_prop_hw_net_id = ProtoField.uint8("lwp3.hub_prop.hw_net_id
 lwp3_proto.fields.hub_prop_bd_addr = ProtoField.ether("lwp3.hub_prop.bd_addr", "Bluetooth Address")
 lwp3_proto.fields.hub_prop_loader_bd_addr = ProtoField.ether("lwp3.hub_prop.loader_bd_addr", "Bootloader Bluetooth Address")
 lwp3_proto.fields.hub_prop_hw_net_fam = ProtoField.uint8("lwp3.hub_prop.hw_net_fam", "Hardware Network Family", base.HEX)
+lwp3_proto.fields.hub_prop_unknown_10 = ProtoField.uint8("lwp3.hub_prop.unknown_10", "unknown", base.HEX)
+lwp3_proto.fields.hub_prop_unknown_11 = ProtoField.uint8("lwp3.hub_prop.unknown_11", "unknown", base.HEX)
 lwp3_proto.fields.hub_prop_volume = ProtoField.uint8("lwp3.hub_prop.volume", "Volume", base.DEC)
+lwp3_proto.fields.hub_prop_unknown_13 = ProtoField.uint8("lwp3.hub_prop.unknown_13", "unknown", base.HEX)
+lwp3_proto.fields.hub_prop_unknown_14 = ProtoField.uint32("lwp3.hub_prop.unknown_14", "unknown", base.DEC)
+lwp3_proto.fields.hub_prop_unknown_15 = ProtoField.uint32("lwp3.hub_prop.unknown_15", "unknown", base.DEC)
 
 -- Hub Actions
 lwp3_proto.fields.hub_action = ProtoField.uint8("lwp3.hub_action", "Action", base.HEX)
@@ -79,6 +84,9 @@ lwp3_proto.fields.hub_io_hw_ver = ProtoField.string("lwp3.hub_io.hw_ver", "Hardw
 lwp3_proto.fields.hub_io_sw_ver = ProtoField.string("lwp3.hub_io.sw_ver", "Software Version")
 lwp3_proto.fields.hub_io_port_id_a = ProtoField.uint8("lwp3.hub_io.port_id_a", "Port ID A", base.HEX)
 lwp3_proto.fields.hub_io_port_id_b = ProtoField.uint8("lwp3.hub_io.port_id_b", "Port ID B", base.HEX)
+
+-- Generic Error
+lwp3_proto.fields.error_code = ProtoField.uint8("lwp3.error_code", "Error Code", base.HEX)
 
 -- Firmware commands
 lwp3_proto.fields.safety_string = ProtoField.string("lwp3.safety_string", "Safety String")
@@ -237,6 +245,16 @@ local last_network_ids = {
     [255] = "DON’T CARE - NOT Implemented",
 }
 
+local error_code = {
+    [0x01] = "ACK",
+    [0x02] = "NACK",
+    [0x03] = "Buffer Overflow",
+    [0x04] = "Timeout",
+    [0x05] = "Command NOT recognized",
+    [0x06] = "Invalid use (e.g. parameter error(s)",
+    [0x07] = "Overcurrent",
+    [0x08] = "Internal ERROR",
+}
 
 ---- generic helper functions -----
 
@@ -482,10 +500,35 @@ local hub_properties = {
         field = lwp3_proto.fields.hub_prop_hw_net_fam,
         parse_update_payload = parse_uint8,
     },
+    [0x10] = {
+        name = "unknown",
+        field = lwp3_proto.fields.hub_prop_unknown_10,
+        parse_update_payload = parse_uint8,
+    },
+    [0x11] = {
+        name = "unknown",
+        field = lwp3_proto.fields.hub_prop_unknown_11,
+        parse_update_payload = parse_uint8,
+    },
     [0x12] = {
         name = "Volume level",
         field = lwp3_proto.fields.hub_prop_volume,
         parse_update_payload = parse_uint8,
+    },
+    [0x13] = {
+        name = "unknown",
+        field = lwp3_proto.fields.hub_prop_unknown_13,
+        parse_update_payload = parse_uint8,
+    },
+    [0x14] = {
+        name = "unknown",
+        field = lwp3_proto.fields.hub_prop_unknown_14,
+        parse_update_payload = parse_uint32,
+    },
+    [0x15] = {
+        name = "unknown",
+        field = lwp3_proto.fields.hub_prop_unknown_15,
+        parse_update_payload = parse_uint32,
     },
 }
 
@@ -599,6 +642,20 @@ function parse_hub_attached_io(range, subtree)
         parse_port_id(range, 4, subtree, lwp3_proto.fields.hub_io_port_id_a)
         parse_port_id(range, 5, subtree, lwp3_proto.fields.hub_io_port_id_b)
     end
+end
+
+-- Parses hub error (0x05) message
+function parse_error(range, subtree)
+    local cmd_type_range = range:range(0, 1)
+    local cmd_type = cmd_type_range:le_uint()
+    local cmd_tree = subtree:add_le(lwp3_proto.fields.msg_type, cmd_type_range, cmd_type)
+    local cmd_info = msg_types[cmd_type] and msg_types[cmd_type].name or "Unknown"
+    cmd_tree:append_text(" (" .. cmd_info .. ")")
+
+    local err_code_range = range:range(1, 1)
+    local err_code = err_code_range:le_uint()
+    local err_tree = subtree:add_le(lwp3_proto.fields.error_code, err_code_range, err_code)
+    err_tree:append_text(" (" .. error_code[err_code] .. ")")
 end
 
 -- Parses a Go Into Boot Mode (0x10) message
@@ -720,7 +777,7 @@ end
 ---- message types: table of possible message types and subcommands ----
 
 -- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#message-types
-local msg_types = {
+msg_types = {
     [0x01] = {
         name = "Hub Property",
         parse_msg = parse_hub_prop,
@@ -819,8 +876,6 @@ local msg_types = {
 ---- Dissector: the entry point for the dissector ----
 
 function lwp3_proto.dissector(buffer, pinfo, tree)
-    print("buffer: " .. buffer())
-
     if buffer:len() == 0 then
         return
     end
@@ -858,3 +913,8 @@ end
 bluetooth_table = DissectorTable.get("bluetooth.uuid")
 -- LWP3 Hub characteristic UUID
 bluetooth_table:add("00001624-1212-efde-1623-785feabcd123", lwp3_proto)
+
+-- some times the UUID is cached so Wireshark doesn't pick it up so we need to
+-- add an entry for GATT handles as well
+bluetooth_gatt_table = DissectorTable.get("btatt.handle")
+bluetooth_gatt_table:add(0x0012, lwp3_proto)
