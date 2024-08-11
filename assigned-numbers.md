@@ -18,7 +18,7 @@ Hub Type IDs
 | 129 (0x81) | 0 | Technic Large Hub - SPIKE Prime (Hub No. 6) | [45601](https://education.lego.com/en-us/products/lego-technic-large-hub-for-spike-prime-/45601) | [bb1142c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb1142c01&idColor=3#T=C&C=3) |
 | 129 (0x81) | 1 | Technic Large Hub - MINDSTORMS Robot Inventor (Hub No. 6) | [51515](https://www.lego.com/en-us/product/robot-inventor-51515) | [67718c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=67718c01#T=C&C=39) |
 | 131 (0x83) | 0 | Technic Small Hub - SPIKE Essential (Hub No. 7) | [45609](https://education.lego.com/en-us/products/lego-technic-small-hub/45609) | [67351c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=67351c01) |
-| 132 (0x84) | 0 | Technic Move (Hub No. 19) | []() | [103479c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=103479c01#T=S&C=86&O={%22color%22:86,%22iconly%22:0}) |
+| 132 (0x84) | *N/A* | Technic Move (Hub No. 19) | []() | [103479c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=103479c01#T=S&C=86&O={%22color%22:86,%22iconly%22:0}) |
 
 
 I/O Device Type IDs
