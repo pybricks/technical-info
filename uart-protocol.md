@@ -491,7 +491,7 @@ mode. This mode is required and must be the last `INFO_...` message for a mode.
 
 This message is formatted as follows:
 
-    MESSAGE_INFO | LENGTH_4 | MODE_<m>, INFO_UNITS [| INFO_MODE_PLUS_8], <data-sets>, <format>, <figures>, <decimals>, <checksum>
+    MESSAGE_INFO | LENGTH_4 | MODE_<m>, INFO_FORMAT [| INFO_MODE_PLUS_8], <data-sets>, <format>, <figures>, <decimals>, <checksum>
 
 `<data-sets>` is the number of sensor data values for this mode. `<format>` is
 the data format (one of `DATAx`). `<data-sets>` times the size of `<format>`
