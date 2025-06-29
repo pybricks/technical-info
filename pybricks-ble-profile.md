@@ -23,6 +23,56 @@ https://github.com/pybricks/pybricksdev/blob/master/pybricksdev/ble/pybricks.py
 https://github.com/pybricks/pybricks-code/blob/master/src/ble-pybricks-service/protocol.ts
 
 
+## Profile v1.4.0
+
+The following changes were made since v1.3.0.
+
+#### Pybricks Service
+
+The Pybricks Service has been extend.
+
+##### Pybricks Command/Event Characteristic
+
+- Changed command:
+
+  - PBIO_PYBRICKS_COMMAND_START_USER_PROGRAM now takes optional uint8_t paramter
+    containing a slot number or built-in program ID number and will return status
+    of PBIO_PYBRICKS_ERROR_INVALID_COMMAND if the requested ID/slot does not exist.
+
+- New command:
+
+  - PBIO_PYBRICKS_COMMAND_WRITE_APP_DATA = 7
+      - Requests to write to a buffer that is pre-allocated by a user program.
+      - Parameters:
+        - offset: The offset from the buffer base address (16-bit little-endian
+          unsigned integer).
+        - payload: The data to write.
+
+- Changed event:
+
+  - PBIO_PYBRICKS_EVENT_STATUS_REPORT contains an additional uint8_t parameter that
+    indicates the currently running program.
+
+- New event:
+
+  - PBIO_PYBRICKS_EVENT_WRITE_APP_DATA = 2
+    - App data sent from the hub to the host.
+    - The payload is a variable number of bytes that was written to app data.
+   
+- New status flag:
+
+  - PBIO_PYBRICKS_STATUS_BLE_HOST_CONNECTED = 9
+    - Indicates that the hub is connected to a BLE central (e.g. Pybricks Code)
+
+##### Pybricks Hub Capabilities Characteristic
+
+- New feature flags:
+  - PBIO_PYBRICKS_FEATURE_FLAG_BUILTIN_USER_PROGRAM_PORT_VIEW = 1 << 3
+    - Hub supports builtin sensor port view monitoring program.
+
+  - PBIO_PYBRICKS_FEATURE_FLAG_BUILTIN_USER_PROGRAM_IMU_CALIBRATION = 1 << 4
+    - Hub supports builtin IMU calibration program.
+
 ## Profile v1.3.0
 
 The following changes were made since v1.2.0.
