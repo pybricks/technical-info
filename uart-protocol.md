@@ -34,21 +34,23 @@ device followed by `MESSAGE_INFO` commands that give information about each mode
 The last mode in the sequence is considered the default mode. In practice, the
 modes are enumerated from highest to lowest (0 always being the lowest).
 
-The sequence sent by the device is terminated by `BYTE_ACK` and `BYTE_SYNC`. If
-the there were no errors reading any of the messages,the brick will reply with
-`BYTE_ACK`. Both devices will then change baud rates (the actual rate is
+The sequence sent by the device is terminated by `BYTE_ACK`. If the there were
+no errors reading any of the messages,the brick will reply with `BYTE_ACK`.
+Both devices will then change baud rates (the actual rate is
 contained in one of the messages) and the device will start sending sensor data
-to the brick. The brick sends `BYTE_NACK` every 100 milliseconds to let the
+to the brick. If the brick doesn't send `BYTE_ACK`, the device will send
+`BYTE_SYNC` and starts the info sequence again.
+The brick sends `BYTE_NACK` every 100 milliseconds to let the
 device know it is still there. If the device does not receive `BYTE_NACK`, it
 will reset and go back to sending the informational messages at 2400 baud.
 
 Newer LPF2 I/O devices can send information messages at 115200 baud instead of
-2400 baud. A `CMD_SPEED` message with the baud rate (115200) must be sent to
-the I/O device before it starts transmitting information messages. If the I/O
-device supports this feature, it will reply with a `BYTE_ACK` message. If no
-`BYTE_ACK` is received, then it is assumed the feature is not supported and it
-is expected that the information messages will be received at 2400 baud.
-
+2400 baud. A `CMD_SPEED` message with the baud rate (115200 - sent at 115200
+baud not 2400) must be sent to the I/O device before it starts transmitting
+information messages. If the I/O device supports this feature, it will reply
+with a `BYTE_ACK` message. If no `BYTE_ACK` is received, then it is assumed the
+feature is not supported and it is expected that the information messages will
+be received at 2400 baud.
 
 ## Message Format
 
