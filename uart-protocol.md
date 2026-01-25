@@ -34,7 +34,7 @@ device followed by `MESSAGE_INFO` commands that give information about each mode
 The last mode in the sequence is considered the default mode. In practice, the
 modes are enumerated from highest to lowest (0 always being the lowest).
 
-The sequence sent by the device is terminated by `BYTE_ACK`. If the there were
+The sequence sent by the device is terminated by `BYTE_ACK`. If there were
 no errors reading any of the messages,the brick will reply with `BYTE_ACK`.
 Both devices will then change baud rates (the actual rate is
 contained in one of the messages) and the device will start sending sensor data
