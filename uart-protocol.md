@@ -195,8 +195,6 @@ Example, LEGO EV3 Gyro sensor:
 Note: the value for the reset command comes from EV3-G software. Not sure if it
 actually does anything.
 
-#### CMD_WRITE — Combined Mode (LPF2 only)
-
 On LPF2 devices, `CMD_WRITE` is also used to activate combined (multi) mode.
 The payload format is:
 
@@ -221,20 +219,7 @@ Example, LEGO Technic Large Angular Motor (combo 0: modes 1, 2, 3):
       |     0x20 | 3 pairs
       MESSAGE_CMD | LENGTH_8 | CMD_WRITE
 
-#### Combined Mode Data
-
-While combined mode is active, the device sends a single data frame containing
-the data for each mode concatenated in the order they appeared in the CMD_WRITE
-pairs. The header uses `MODE_0` (cmd bits = 0); the total payload size is padded
-to the next power-of-2.
-
-    MESSAGE_DATA | LENGTH_<n> | MODE_0, <data-mode-A>, <data-mode-B>, ..., <checksum>
-
-Example, LEGO Technic Large Angular Motor (modes 1+2+3, 2+4+2 bytes each):
-
-    0xD8, <spd:2B>, <pos:4B>, <apos:2B>, <padding:6B>, <checksum>
-      ^
-      MESSAGE_DATA | LENGTH_8 | MODE_0
+Look at [MSG_DATA](#combined-mode-data) for an example of the combined data frame sent by the device after this command.
 
 #### CMD_VERSION
 
@@ -590,6 +575,21 @@ Example, LEGO BOOST Color and Distance sensor:
       |     |     checksum
       |     color index = 0
       MESSAGE_DATA | LENGTH_1 | MODE_0
+
+##### Combined Mode Data
+
+While combined mode is active, the device sends a single data frame containing
+the data for each mode concatenated in the order they appeared in the CMD_WRITE
+pairs. The header uses `MODE_0` (cmd bits = 0); the total payload size is padded
+to the next power-of-2.
+
+    MESSAGE_DATA | LENGTH_<n> | MODE_0, <data-mode-A>, <data-mode-B>, ..., <checksum>
+
+Example, LEGO Technic Large Angular Motor (modes 1+2+3, 2+4+2 bytes each):
+
+    0xD8, <spd:2B>, <pos:4B>, <apos:2B>, <padding:6B>, <checksum>
+      ^
+      MESSAGE_DATA | LENGTH_8 | MODE_0
 
 #### Writing Data
 
