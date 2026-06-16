@@ -583,12 +583,17 @@ the data for each mode concatenated in the order they appeared in the CMD_WRITE
 pairs. The header uses `MODE_0` (cmd bits = 0); the total payload size is padded
 to the next power-of-2.
 
-    MESSAGE_DATA | LENGTH_<n> | MODE_0, <data-mode-A>, <data-mode-B>, ..., <checksum>
+    MESSAGE_DATA | LENGTH_<n> | MODE_0, <mode-data-A>, <mode-data-B>, ..., <checksum>
 
-Example, LEGO Technic Large Angular Motor (modes 1+2+3, 2+4+2 bytes each):
+Example, LEGO Technic Large Angular Motor (modes 1+2+3, 1+4+2 bytes):
 
-    0xD8, <spd:2B>, <pos:4B>, <apos:2B>, <padding:6B>, <checksum>
-      ^
+    0xD8, 0x32, 0x5a, 0x00, 0x00, 0x00, 0x2d, 0x00, 0x00, 0x62
+      ^     ^     ^                       ^           ^     ^
+      |     |     |                       |           |     checksum
+      |     |     |                       |           padding
+      |     |     |                       absolute position (mode 3, dataset 0), LE int16: 45
+      |     |     position (mode 2, dataset 0), LE int32: 90
+      |     speed (mode 1, dataset 0), int8: 50
       MESSAGE_DATA | LENGTH_8 | MODE_0
 
 #### Writing Data
