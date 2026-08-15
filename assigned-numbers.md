@@ -80,6 +80,8 @@ programmable brick).
 | 87 (0x57) | Technic Move hub built-in steering motor | *N/A* | *N/A* |
 | 88 (0x58) | Technic Move hub built-in lights (6) | *N/A* | *N/A* |
 | 89 (0x59) | Technic Move hub built-in play VM | *N/A* | *N/A* |
+| 90 (0x5a) | Duplo Events | *N/A* | *N/A* |
+| 91 (0x5b) | Duplo Action Brick Scanner | *N/A* | *N/A* |
 | 92 (0x5c) | Powered up hub unknown (ChgAct/PlyAct/Last/Total) | *N/A* | *N/A* |
 | 93 (0x5d) | Powered Up hub IMU orientation | *N/A* | *N/A* |
 | 94 (0x5e) | Powered Up hub unknown (GEST_BITMAP) | *N/A* | *N/A* |
