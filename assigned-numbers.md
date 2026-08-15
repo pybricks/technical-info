@@ -7,7 +7,8 @@ Hub Type IDs
 | ID (hex) | Variant | Description | LEGO | Bricklink |
 |-|-|-|-|-|
 | 0 (0x00) | *N/A* | WeDo 2.0 hub (LPF2 Smart Hub 2 I/O) | [45301](https://education.lego.com/en-us/products/wedo-2-0-smart-hub-by-lego-education/45301) | [19071c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=19071c01#T=C) |
-| 32 (0x20) | *N/A* | DUPLO Train Hub (?) | []() | [28743c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=28743c01&idColor=11#T=C&C=11) |
+| 32 (0x20) | *N/A* | DUPLO Train Hub (Hub No. 5) | []() | [28743c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=28743c01&idColor=11#T=C&C=11) |
+| 33 (0x21) | *N/A* | DUPLO Train Hub (Hub No. 16) | []() | [103651c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=103651c01) |
 | 64 (0x40) | *N/A* | BOOST Move Hub (JAJUR1) | [88006](https://www.lego.com/en-us/product/move-hub-88006) | [bb0894c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb0894c01&idColor=1#T=C&C=1) |
 | 65 (0x41) | *N/A* | Powered UP 2-port Smart Hub (Hub No. 4) | [88009](https://www.lego.com/en-us/product/hub-88009) | [bb0892c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb0892c01&idColor=1#T=C&C=1) |
 | 66 (0x42) | *N/A* | Powered UP Handset (Handset No. 2) | [88010](https://www.lego.com/en-us/product/remote-control-88010) | [28739c01](https://www.bricklink.com/v2/catalog/catalogitem.page?P=28739c01&idColor=1#T=C&C=1) |
