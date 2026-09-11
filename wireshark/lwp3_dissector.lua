@@ -25,6 +25,18 @@
 
 
 
+-- Wireshark 4.x embeds Lua 5.4, which dropped the bit32 library that was
+-- available in Lua 5.2/5.3.  Provide the handful of functions used here so the
+-- dissector keeps working on both old and new versions of Wireshark.
+if not bit32 then
+    bit32 = {}
+    -- load() keeps the 5.3+ bitwise operators out of the source so that this
+    -- file still parses on Lua 5.2.
+    bit32.band = load("return function(a, b) return (a & b) & 0xffffffff end")()
+    bit32.rshift = load("return function(a, n) return (a >> n) & 0xffffffff end")()
+end
+
+
 ---- Protocol: declare the names we will see in Wireshark ---
 
 local lwp3_proto = Proto("LWP3", "LEGO Wireless Protocol v3 Hub Service")
@@ -102,6 +114,30 @@ lwp3_proto.fields.port_output_subcommand = ProtoField.uint8("lwp3.port_output_su
 lwp3_proto.fields.port_payload = ProtoField.bytes("lwp3.port_payload", "Payload", base.SPACE)
 lwp3_proto.fields.port_info_type = ProtoField.uint8("lwp3.port_info_type", "Info Type", base.HEX)
 lwp3_proto.fields.port_feedback = ProtoField.uint8("lwp3.port_feedback", "Feedback", base.HEX)
+lwp3_proto.fields.virt_port_command = ProtoField.uint8("lwp3.virt_port_command", "Command", base.HEX)
+lwp3_proto.fields.port_capabilities = ProtoField.uint8("lwp3.port_capabilities", "Capabilities", base.HEX)
+lwp3_proto.fields.port_mode_count = ProtoField.uint8("lwp3.port_mode_count", "Mode Count", base.DEC)
+lwp3_proto.fields.port_input_modes = ProtoField.uint16("lwp3.port_input_modes", "Input Modes", base.HEX)
+lwp3_proto.fields.port_output_modes = ProtoField.uint16("lwp3.port_output_modes", "Output Modes", base.HEX)
+lwp3_proto.fields.port_mode_combination = ProtoField.uint16("lwp3.port_mode_combination", "Mode Combination", base.HEX)
+lwp3_proto.fields.port_mode_info_type = ProtoField.uint8("lwp3.port_mode_info_type", "Mode Info Type", base.HEX)
+lwp3_proto.fields.port_mode_name = ProtoField.string("lwp3.port_mode_name", "Name")
+lwp3_proto.fields.port_mode_symbol = ProtoField.string("lwp3.port_mode_symbol", "Symbol")
+lwp3_proto.fields.port_mode_min = ProtoField.float("lwp3.port_mode_min", "Minimum")
+lwp3_proto.fields.port_mode_max = ProtoField.float("lwp3.port_mode_max", "Maximum")
+lwp3_proto.fields.port_mode_input_mapping = ProtoField.uint8("lwp3.port_mode_input_mapping", "Input Mapping", base.HEX)
+lwp3_proto.fields.port_mode_output_mapping = ProtoField.uint8("lwp3.port_mode_output_mapping", "Output Mapping", base.HEX)
+lwp3_proto.fields.port_mode_motor_bias = ProtoField.uint8("lwp3.port_mode_motor_bias", "Motor Bias", base.DEC)
+lwp3_proto.fields.port_mode_capability_bits = ProtoField.bytes("lwp3.port_mode_capability_bits", "Capability Bits", base.SPACE)
+lwp3_proto.fields.port_mode_datasets = ProtoField.uint8("lwp3.port_mode_datasets", "Datasets", base.DEC)
+lwp3_proto.fields.port_mode_dataset_type = ProtoField.uint8("lwp3.port_mode_dataset_type", "Dataset Type", base.HEX)
+lwp3_proto.fields.port_mode_figures = ProtoField.uint8("lwp3.port_mode_figures", "Total Figures", base.DEC)
+lwp3_proto.fields.port_mode_decimals = ProtoField.uint8("lwp3.port_mode_decimals", "Decimals", base.DEC)
+lwp3_proto.fields.port_combo_subcommand = ProtoField.uint8("lwp3.port_combo_subcommand", "Subcommand", base.HEX)
+lwp3_proto.fields.port_combo_index = ProtoField.uint8("lwp3.port_combo_index", "Combination Index", base.DEC)
+lwp3_proto.fields.port_combo_mode_dataset = ProtoField.uint8("lwp3.port_combo_mode_dataset", "Mode/Dataset", base.HEX)
+lwp3_proto.fields.port_combo_multi_update = ProtoField.uint8("lwp3.port_combo_multi_update", "Multi-Update Enabled", base.DEC)
+lwp3_proto.fields.port_combo_dataset_bitmask = ProtoField.uint16("lwp3.port_combo_dataset_bitmask", "Dataset Bitmask", base.HEX)
 
 ---- Enmerations: lookup tables for enum values ----
 
@@ -223,15 +259,15 @@ local type_ids = {
     [0x0053] = "Unknown",
     [0x0054] = "Unknown",
     [0x0055] = "Mario Unknown",
-    [0x0056] = "Unknown",
-    [0x0057] = "Unknown",
-    [0x0058] = "Unknown",
-    [0x0059] = "Unknown",
+    [0x0056] = "Technic Move hub built-in drive motor",
+    [0x0057] = "Technic Move hub built-in steering motor",
+    [0x0058] = "Technic Move hub 6-LED array",
+    [0x0059] = "Technic Move hub play VM",
     [0x005A] = "Unknown",
     [0x005B] = "Unknown",
-    [0x005C] = "Unknown",
-    [0x005D] = "Unknown",
-    [0x005E] = "Unknown",
+    [0x005C] = "Technic Move hub activity counters",
+    [0x005D] = "Technic Move hub IMU orientation",
+    [0x005E] = "Technic Move hub IMU gesture bitmap",
     [0x005F] = "Unknown",
 }
 
@@ -386,7 +422,7 @@ function parse_type_id(range, offset, subtree, field)
     local range = range:range(offset, 2)
     local value = range:le_int()
     local type_id_tree = subtree:add_le(field, range, value)
-    type_id_tree:append_text(" (" .. type_ids[value] .. ")")
+    type_id_tree:append_text(" (" .. (type_ids[value] or "Unknown") .. ")")
 end
 
 -- parses a 1-byte info type
@@ -401,7 +437,7 @@ function parse_port_info_type(range, offset, subtree, field)
         [0x02] = "Possible Mode Combinations",
     }
 
-    tree:append_text(" (" .. info_type[value] .. ")")
+    tree:append_text(" (" .. (info_type[value] or "Unknown") .. ")")
 end
 
 -- parses a 1-byte port output feedback
@@ -569,7 +605,7 @@ function parse_hub_action(range, subtree)
         [0x32] = "Hub Will Go Into Boot Mode",
     }
 
-    action_tree:append_text(" (" .. hub_action[action_value] .. ")")
+    action_tree:append_text(" (" .. (hub_action[action_value] or "Unknown") .. ")")
 end
 
 -- Parses a hub alert (0x03) message
@@ -584,7 +620,7 @@ function parse_hub_alert(range, subtree)
         [0x03] = "Low Signal Strength",
         [0x04] = "Over Power Condition",
     }
-    alert_type_tree:append_text(" (" .. alert_types[alert_type] .. ")")
+    alert_type_tree:append_text(" (" .. (alert_types[alert_type] or "Unknown") .. ")")
 
     local alert_op_range = range:range(1, 1)
     local alert_op = alert_op_range:le_uint()
@@ -694,6 +730,221 @@ function parse_port_fmt_single(range, subtree)
     parse_uint8(range, 1, subtree, lwp3_proto.fields.port_mode)
     parse_uint32(range, 2, subtree, lwp3_proto.fields.port_delta_interval)
     parse_uint8(range, 2, subtree, lwp3_proto.fields.port_notification_enabled)
+end
+
+-- mode information types
+-- https://lego.github.io/lego-ble-wireless-protocol-docs/index.html#mode-information-types
+local mode_info_types = {
+    [0x00] = "NAME",
+    [0x01] = "RAW",
+    [0x02] = "PCT",
+    [0x03] = "SI",
+    [0x04] = "SYMBOL",
+    [0x05] = "MAPPING",
+    [0x06] = "Used internally",
+    [0x07] = "Motor Bias",
+    [0x08] = "Capability Bits",
+    [0x80] = "VALUE FORMAT",
+}
+
+-- Port Input Format Setup (CombinedMode) subcommands
+local combo_subcommands = {
+    [0x01] = "Set ModeAndDataSet Combination(s)",
+    [0x02] = "Lock LPF2 Device for Setup",
+    [0x03] = "Unlock and Start with Updates Enabled",
+    [0x04] = "Unlock and Start without Updates Enabled",
+    [0x06] = "Reset Sensor",
+}
+
+-- port capability flags used by Port Information (0x43) messages
+local port_capabilities = {
+    [0x01] = "Output",
+    [0x02] = "Input",
+    [0x04] = "Logical Combinable",
+    [0x08] = "Logical Synchronizable",
+}
+
+-- mapping flags used by the MAPPING mode information type
+local mode_mapping_flags = {
+    [0x80] = "Supports NULL value",
+    [0x40] = "Supports Functional Mapping 2.0+",
+    [0x10] = "ABS (Absolute)",
+    [0x08] = "REL (Relative)",
+    [0x04] = "DIS (Discrete)",
+}
+
+-- dataset types used by the VALUE FORMAT mode information type
+local mode_dataset_types = {
+    [0x00] = "8-bit",
+    [0x01] = "16-bit",
+    [0x02] = "32-bit",
+    [0x03] = "FLOAT",
+}
+
+-- parses a 1-byte mode information type
+function parse_mode_info_type(range, offset, subtree, field)
+    local range = range:range(offset, 1)
+    local value = range:le_uint()
+    local tree = subtree:add_le(field, range, value)
+    tree:append_text(" (" .. (mode_info_types[value] or "Unknown") .. ")")
+end
+
+-- parses a 1-byte bit field, appending the names of the flags that are set
+function parse_flags(range, offset, subtree, field, map)
+    local range = range:range(offset, 1)
+    local value = range:le_uint()
+    local tree = subtree:add_le(field, range, value)
+    tree:append_text(" (" .. join_flags(value, map, " + ") .. ")")
+end
+
+-- Parses a Port Mode Information Request (0x22) message
+function parse_port_mode_info_req(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    parse_uint8(range, 1, subtree, lwp3_proto.fields.port_mode)
+    parse_mode_info_type(range, 2, subtree, lwp3_proto.fields.port_mode_info_type)
+end
+
+-- Parses a Port Input Format Setup (CombinedMode) (0x42) message
+function parse_port_setup_combo(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+
+    local sub_range = range:range(1, 1)
+    local sub_value = sub_range:le_uint()
+    local sub_tree = subtree:add_le(lwp3_proto.fields.port_combo_subcommand, sub_range, sub_value)
+    sub_tree:append_text(" (" .. (combo_subcommands[sub_value] or "Unknown") .. ")")
+
+    if sub_value == 0x01 then
+        parse_uint8(range, 2, subtree, lwp3_proto.fields.port_combo_index)
+
+        -- followed by one byte per mode/dataset entry, high nibble is the mode
+        -- and low nibble is the dataset within that mode
+        local offset = 3
+        while offset < range:len() do
+            local entry_range = range:range(offset, 1)
+            local entry_value = entry_range:le_uint()
+            local entry_tree = subtree:add_le(lwp3_proto.fields.port_combo_mode_dataset,
+                entry_range, entry_value)
+            entry_tree:append_text(" (mode " .. bit32.rshift(entry_value, 4) ..
+                ", dataset " .. bit32.band(entry_value, 0x0f) .. ")")
+            offset = offset + 1
+        end
+    end
+end
+
+-- Parses a Port Information (0x43) message
+function parse_port_info(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    parse_port_info_type(range, 1, subtree, lwp3_proto.fields.port_info_type)
+
+    local info_type = range:range(1, 1):le_uint()
+
+    if info_type == 0x01 then
+        parse_flags(range, 2, subtree, lwp3_proto.fields.port_capabilities, port_capabilities)
+        parse_uint8(range, 3, subtree, lwp3_proto.fields.port_mode_count)
+        parse_uint16(range, 4, subtree, lwp3_proto.fields.port_input_modes)
+        parse_uint16(range, 6, subtree, lwp3_proto.fields.port_output_modes)
+    elseif info_type == 0x02 then
+        -- zero or more 16-bit bit masks, each one listing the modes that can be
+        -- combined, terminated by the end of the message
+        local offset = 2
+        while offset + 1 < range:len() do
+            parse_uint16(range, offset, subtree, lwp3_proto.fields.port_mode_combination)
+            offset = offset + 2
+        end
+    end
+end
+
+-- Parses a Port Mode Information (0x44) message
+function parse_port_mode_info(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    parse_uint8(range, 1, subtree, lwp3_proto.fields.port_mode)
+    parse_mode_info_type(range, 2, subtree, lwp3_proto.fields.port_mode_info_type)
+
+    local info_type = range:range(2, 1):le_uint()
+    local payload = range:range(3)
+
+    if info_type == 0x00 then
+        parse_string(range, 3, subtree, lwp3_proto.fields.port_mode_name)
+    elseif info_type == 0x04 then
+        parse_string(range, 3, subtree, lwp3_proto.fields.port_mode_symbol)
+    elseif info_type == 0x01 or info_type == 0x02 or info_type == 0x03 then
+        -- RAW, PCT and SI are all a pair of 32-bit floats
+        subtree:add_le(lwp3_proto.fields.port_mode_min, payload:range(0, 4),
+            payload:range(0, 4):le_float())
+        subtree:add_le(lwp3_proto.fields.port_mode_max, payload:range(4, 4),
+            payload:range(4, 4):le_float())
+    elseif info_type == 0x05 then
+        parse_flags(range, 3, subtree, lwp3_proto.fields.port_mode_input_mapping,
+            mode_mapping_flags)
+        parse_flags(range, 4, subtree, lwp3_proto.fields.port_mode_output_mapping,
+            mode_mapping_flags)
+    elseif info_type == 0x07 then
+        parse_uint8(range, 3, subtree, lwp3_proto.fields.port_mode_motor_bias)
+    elseif info_type == 0x08 then
+        subtree:add(lwp3_proto.fields.port_mode_capability_bits, payload)
+    elseif info_type == 0x80 then
+        parse_uint8(range, 3, subtree, lwp3_proto.fields.port_mode_datasets)
+
+        local type_range = range:range(4, 1)
+        local type_value = type_range:le_uint()
+        local type_tree = subtree:add_le(lwp3_proto.fields.port_mode_dataset_type,
+            type_range, type_value)
+        type_tree:append_text(" (" .. (mode_dataset_types[type_value] or "Unknown") .. ")")
+
+        parse_uint8(range, 5, subtree, lwp3_proto.fields.port_mode_figures)
+        parse_uint8(range, 6, subtree, lwp3_proto.fields.port_mode_decimals)
+    else
+        local data_tree = subtree:add(lwp3_proto.fields.port_data, payload)
+        data_tree:append_text(" (" .. payload:len() .. " bytes)")
+    end
+end
+
+-- Parses a Port Value (CombinedMode) (0x46) message
+function parse_port_val_combo(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+    parse_uint16(range, 1, subtree, lwp3_proto.fields.port_combo_dataset_bitmask)
+
+    -- TODO: The interpretation of this data depends on the combination that was
+    -- set up by a previous Port Input Format Setup (CombinedMode) message.
+    local data_range = range(3)
+    local data_tree = subtree:add(lwp3_proto.fields.port_data, data_range)
+    data_tree:append_text(" (" .. data_range:len() .. " bytes)")
+end
+
+-- Parses a Port Input Format (CombinedMode) (0x48) message
+function parse_port_fmt_combo(range, subtree)
+    parse_port_id(range, 0, subtree, lwp3_proto.fields.port_id)
+
+    -- high bit says whether multi-update is enabled, low nibble is the index of
+    -- the combination that is in use
+    local ctrl_range = range:range(1, 1)
+    local ctrl_value = ctrl_range:le_uint()
+    subtree:add_le(lwp3_proto.fields.port_combo_multi_update, ctrl_range,
+        bit32.rshift(ctrl_value, 7))
+    subtree:add_le(lwp3_proto.fields.port_combo_index, ctrl_range,
+        bit32.band(ctrl_value, 0x0f))
+
+    parse_uint16(range, 2, subtree, lwp3_proto.fields.port_combo_dataset_bitmask)
+end
+
+-- Parses a Virtual Port Setup (0x61) message
+function parse_virt_port_setup(range, subtree)
+    local cmd_range = range:range(0, 1)
+    local cmd_value = cmd_range:le_uint()
+    local cmd_tree = subtree:add_le(lwp3_proto.fields.virt_port_command, cmd_range, cmd_value)
+
+    local commands = {
+        [0x00] = "Disconnected",
+        [0x01] = "Connected",
+    }
+    cmd_tree:append_text(" (" .. (commands[cmd_value] or "Unknown") .. ")")
+
+    if cmd_value == 0x00 then
+        parse_port_id(range, 1, subtree, lwp3_proto.fields.port_id)
+    elseif cmd_value == 0x01 then
+        parse_port_id(range, 1, subtree, lwp3_proto.fields.hub_io_port_id_a)
+        parse_port_id(range, 2, subtree, lwp3_proto.fields.hub_io_port_id_b)
+    end
 end
 
 -- Parses a Port Output Command (0x81) message
@@ -891,7 +1142,7 @@ function lwp3_proto.dissector(buffer, pinfo, tree)
     local offset = 1
     if bit32.band(msg_len, 0x80) ~= 0 then
         local extra = buffer(1, 1):le_uint()
-        msg_len = bit32.band(msg_len, 0x80) + extra * 128
+        msg_len = bit32.band(msg_len, 0x7f) + extra * 128
         msg_len_range = buffer(0, 2)
         offset = 2
     end
@@ -905,9 +1156,16 @@ function lwp3_proto.dissector(buffer, pinfo, tree)
     local msg_type = msg_type_range:le_uint()
     local msg_tree = subtree:add_le(lwp3_proto.fields.msg_type, msg_type_range, msg_type)
     local msg_info = msg_types[msg_type]
-    msg_tree:append_text(" (" .. msg_info.name .. ")")
+    msg_tree:append_text(" (" .. (msg_info and msg_info.name or "Unknown") .. ")")
 
-    msg_info.parse_msg(buffer(offset + 2), subtree)
+    if msg_info and msg_info.parse_msg then
+        msg_info.parse_msg(buffer(offset + 2), subtree)
+    elseif buffer:len() > offset + 2 then
+        -- no parser for this message type yet, just show the remaining bytes
+        local data_range = buffer(offset + 2)
+        local data_tree = subtree:add(lwp3_proto.fields.port_data, data_range)
+        data_tree:append_text(" (" .. data_range:len() .. " bytes)")
+    end
 end
 
 bluetooth_table = DissectorTable.get("bluetooth.uuid")
